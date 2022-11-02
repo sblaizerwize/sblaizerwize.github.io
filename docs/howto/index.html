@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en" dir=>
+
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Deploying using Octopus in Betelgeuse Last updated: 06/11/2020
+ Introduction This guide explains you how to manually deploy to the AWS Cloud any of the following Betelgeuse projects using Octopus deploy:
+ Orion.Client Orion.Bellatrix Orion.Rigel Orion.Saiph  Note:
+These projects are automatically deployed to the development and testing environments. Both environments share the same projects and versions. For the laboratory environment, some of these packages are deployed manually.  The deployment process of Betelgeuse projects is detailed in the Architecture Guide.">
+<meta name="theme-color" content="#FFFFFF"><meta property="og:title" content="How-To Guide" />
+<meta property="og:description" content="" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://sblaizerwize.github.io/docs/howto/" />
+
+<title>How-To Guide | Salomon Marquez</title>
+<link rel="manifest" href="/manifest.json">
+<link rel="icon" href="/favicon.png" type="image/x-icon">
+<link rel="stylesheet" href="/book.min.8005b622238f1cff391feb991d3f8254c6e4e5acb4834c7c6dbf6e211d19551b.css" integrity="sha256-gAW2IiOPHP85H&#43;uZHT&#43;CVMbk5ay0g0x8bb9uIR0ZVRs=">
+<script defer src="/en.search.min.f3b14ae6088304167925d8606d26c5c1fa50759915b29300b9369797fc6f4489.js" integrity="sha256-87FK5giDBBZ5JdhgbSbFwfpQdZkVspMAuTaXl/xvRIk="></script>
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-215534783-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<link rel="alternate" type="application/rss+xml" href="https://sblaizerwize.github.io/docs/howto/index.xml" title="Salomon Marquez" />
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+  
+</head>
+
+<body dir=>
+  <input type="checkbox" class="hidden" id="menu-control" />
+  <main class="container flex">
+    <aside class="book-menu">
+      
+  <nav>
+<h2 class="book-brand">
+  <a href="/"><img src="/logo.png" alt="Logo" /><span>Salomon Marquez</span>
+  </a>
+</h2>
+
+
+<div class="book-search">
+  <input type="text" id="book-search-input" placeholder="Search" aria-label="Search" maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+  <hr>
+<p><a href="/posts/"><strong>PORTFOLIO</strong></a></p>
+<hr>
+<p><strong>ABOUT ME</strong></p>
+<ul>
+<li><a href="/#skills">Skills</a></li>
+<li><a href="/#projects">Projects</a></li>
+<li><a href="/#open-source">Open Source</a></li>
+<li><a href="/#presentations">Presentations</a></li>
+<li><a href="/#leadership-initiatives-at-wizeline">Leadership Initiatives</a></li>
+<li><a href="/#certifications">Certifications</a></li>
+<li><a href="/#education">Education</a>
+<!-- raw HTML omitted --></li>
+</ul>
+<hr>
+<p><strong>CONTACT</strong></p>
+<ul>
+<li><a href="mailto:phd.smarquez@gmail.com">phd.smarquez@gmail.com</a>
+<!-- raw HTML omitted --></li>
+</ul>
+<hr>
+<p><strong>LINKS</strong></p>
+<ul>
+<li><a href="/resume/CV_SALOMON_MARQUEZ.pdf">My CV</a></li>
+<li><a href="https://www.linkedin.com/in/sblaizer/">My LinkedIn</a></li>
+<li><a href="https://github.com/sblaizerwize?tab=repositories">My GitHub</a></li>
+<li><a href="https://scholar.google.com.mx/citations?hl=en&amp;user=A91CjSIAAAAJ&amp;view_op=list_works&amp;sortby=pubdate">My Scholar</a></li>
+</ul>
+<hr>
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var menu=document.querySelector("aside.book-menu nav");addEventListener("beforeunload",function(event){localStorage.setItem("menu.scrollTop",menu.scrollTop);});menu.scrollTop=localStorage.getItem("menu.scrollTop");})();</script>
+
+
+ 
+    </aside>
+
+    <div class="book-page">
+      <header class="book-header">
+        
+  <head>
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-215534783-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-215534783-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+</head>
+<div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <strong>How-To Guide</strong>
+
+  <label for="toc-control">
+    
+    <img src="/svg/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+    <input type="checkbox" class="hidden" id="toc-control" />
+    <aside class="hidden clearfix">
+      
+  <nav id="TableOfContents">
+  <ul>
+    <li><a href="#introduction">Introduction</a></li>
+    <li><a href="#log-in-to-octopus">Log In to Octopus</a></li>
+    <li><a href="#deploy-betelgeuse-projects-manually">Deploy Betelgeuse Projects Manually</a>
+      <ul>
+        <li><a href="#select-a-project">Select a Project</a></li>
+        <li><a href="#create-a-release">Create a Release</a></li>
+        <li><a href="#deploy-the-release">Deploy the Release</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+
+    </aside>
+  
+ 
+      </header>
+
+      
+      
+  <article class="markdown"><h1 id="deploying-using-octopus-in-betelgeuse"><strong>Deploying using Octopus in Betelgeuse</strong></h1>
+<p>Last updated: 06/11/2020</p>
+<hr>
+<h2 id="introduction">Introduction</h2>
+<p>This guide explains you how to manually deploy to the AWS Cloud any of the following Betelgeuse projects using Octopus deploy:</p>
+<ul>
+<li>Orion.Client</li>
+<li>Orion.Bellatrix</li>
+<li>Orion.Rigel</li>
+<li>Orion.Saiph</li>
+</ul>
+<blockquote class="book-hint info">
+  <strong>Note:</strong><br>
+These projects are automatically deployed to the development and testing environments. Both environments share the same projects and versions. For the laboratory environment, some of these packages are deployed manually.
+</blockquote>
+
+<p>The deployment process of Betelgeuse projects is detailed in the <a href="/docs/architecture/">Architecture Guide</a>. Briefly, the process consists of four stages that run automatically after a developer makes a pull request in GitLab:</p>
+<ol>
+<li><strong>Prebuild</strong>. Determines image version.</li>
+<li><strong>Build and Test</strong>. Builds, analyzes static code, and publishes the .NET core application and its dependencies to a folder for deployment.</li>
+<li><strong>Push</strong>. Builds, tags, and pushes a dockerized image of the .NET core application to the container registry of GitLab and to the AWS Elastic Container Registry (ECR). It also packs the powershell deployment script into a NuGet package and pushes it to the Octopus built-in repository.</li>
+<li><strong>Deploy</strong>. Creates a release with the specified version in the <strong>Prebuild</strong> step and deploys it to a deployment environment.</li>
+</ol>
+<p>This guide describes how you can run the <strong>Deployment</strong> stage manually.</p>
+<hr>
+<h2 id="log-in-to-octopus">Log In to Octopus</h2>
+<ol>
+<li>Go to <strong>Octopus Deploy</strong> site.</li>
+<li>Log in to Octopus.
+<ul>
+<li>If you are a admin user:
+<ul>
+<li>In the Log in page, click on the <strong>Google</strong> button to sign in using admin SSO.</li>
+<li>Identify yourself using your admin credentials.</li>
+</ul>
+</li>
+<li>If you are a dev user:
+<ul>
+<li>Identify yourself using your dev credentials.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<p>Once you login, you are redirected to the <strong>Octopus dashboard</strong> that displays all the Betelgeuse projects and their release versions on their respective deployment environments.</p>
+<hr>
+<h2 id="deploy-betelgeuse-projects-manually">Deploy Betelgeuse Projects Manually</h2>
+<p>This section describes how you can deploy Betelgeuse projects manually using Octopus GUI. As an example, the following steps illustrate the process for deploying the bellatrix microservice manually.</p>
+<h3 id="select-a-project">Select a Project</h3>
+<ol>
+<li>In the Octopus dashboard screen, select the <strong>Orion.Bellatrix</strong> project under the <strong>Default Project Group</strong> column. <br>
+The application shows an overview of the project and its versions deployed in each of the deployment environments.</li>
+</ol>
+<h3 id="create-a-release">Create a Release</h3>
+<ol>
+<li>Click on the <strong>CREATE RELEASE</strong> button, located on the top left corner of the screen under the project’s name.<br>
+Octopus loads the latest version release included in the Octopus Built-in registry pushed from GitLab. It also includes all the packages integrated in this release.</li>
+<li>Select the version and packages for the release you want to deploy.</li>
+<li>Click on the <strong>SAVE</strong> button located at the top right corner of the section.</li>
+<li>On the left panel, click on <strong>Overview</strong>.<br>
+Octopus displays the latest release that you created in step 1.</li>
+</ol>
+<h3 id="deploy-the-release">Deploy the Release</h3>
+<ol>
+<li>Click on the <strong>DEPLOY…</strong> button under the environment where you want to deploy the release.<br>
+Octopus redirects you to a new screen that shows you step-by-step the progress of the task.</li>
+<li>Click on the <strong>TASK LOG</strong> tab to check the deployment logs.</li>
+<li>Filter the deployment logs with the following parameters:
+<ul>
+<li>Expand = All</li>
+<li>Log level = Verbose</li>
+<li>Log fail = All
+<blockquote class="book-hint danger">
+  <strong>Important:</strong><br>
+Deployment logs can help you to monitor and debug the deployment process.
+</blockquote>
+</li>
+</ul>
+</li>
+<li>In the top menu, go to Dashboard to verify that the deployment process is ready for the deployment environment you selected.</li>
+</ol>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+
+
+
+
+</div>
+
+ 
+        
+      </footer>
+
+      
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+    <aside class="book-toc">
+      
+  <nav id="TableOfContents">
+  <ul>
+    <li><a href="#introduction">Introduction</a></li>
+    <li><a href="#log-in-to-octopus">Log In to Octopus</a></li>
+    <li><a href="#deploy-betelgeuse-projects-manually">Deploy Betelgeuse Projects Manually</a>
+      <ul>
+        <li><a href="#select-a-project">Select a Project</a></li>
+        <li><a href="#create-a-release">Create a Release</a></li>
+        <li><a href="#deploy-the-release">Deploy the Release</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+ 
+    </aside>
+    
+  </main>
+
+  
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

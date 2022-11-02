@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>python on Salomon Marquez</title>
+    <link>https://sblaizerwize.github.io/tags/python/</link>
+    <description>Recent content in python on Salomon Marquez</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 14 Dec 2021 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://sblaizerwize.github.io/tags/python/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>How to Create Python Packages</title>
+      <link>https://sblaizerwize.github.io/posts/pythonpackages/</link>
+      <pubDate>Tue, 14 Dec 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://sblaizerwize.github.io/posts/pythonpackages/</guid>
+      <description>A Python package is a collection of modules. A module is the easiest way to import and reuse existing Python code that’s developed by other programmers. In simple terms, a package is a module, but not all modules are packages. So, the question that raises is: what differentiates a package from a module? The response lies in a file named __init__.py, which indicates that the folder directory is a package. In this article, we’ll walk you through the main concepts and steps about how to create, install, publish, and test your own Python package locally and globally.</description>
+    </item>
+    
+    <item>
+      <title>Fundamentals of Dictionaries</title>
+      <link>https://sblaizerwize.github.io/posts/fundamentalsofdictionaries/</link>
+      <pubDate>Mon, 23 Aug 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://sblaizerwize.github.io/posts/fundamentalsofdictionaries/</guid>
+      <description>Let’s say you want to create an inventory of your video games. You are interested in storing information like name, genre, platforms, and ratings. You would like to access this information simply by knowing the name of the video game. Instead of using a database, you compare how practical it is to use dictionaries rather than lists. With a list, you need to store the information sequentially and scan through the whole list to find a particular video game name.</description>
+    </item>
+    
+  </channel>
+</rss>

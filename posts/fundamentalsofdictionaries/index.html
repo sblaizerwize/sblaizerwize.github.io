@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en" dir=>
+
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Let’s say you want to create an inventory of your video games. You are interested in storing information like name, genre, platforms, and ratings. You would like to access this information simply by knowing the name of the video game. Instead of using a database, you compare how practical it is to use dictionaries rather than lists. With a list, you need to store the information sequentially and scan through the whole list to find a particular video game name.">
+<meta name="theme-color" content="#FFFFFF"><meta property="og:title" content="Fundamentals of Dictionaries" />
+<meta property="og:description" content="Let’s say you want to create an inventory of your video games. You are interested in storing information like name, genre, platforms, and ratings. You would like to access this information simply by knowing the name of the video game. Instead of using a database, you compare how practical it is to use dictionaries rather than lists. With a list, you need to store the information sequentially and scan through the whole list to find a particular video game name." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://sblaizerwize.github.io/posts/fundamentalsofdictionaries/" />
+<meta property="article:published_time" content="2021-08-23T00:00:00+00:00" />
+<meta property="article:modified_time" content="2021-08-23T00:00:00+00:00" />
+<title>Fundamentals of Dictionaries | Salomon Marquez</title>
+<link rel="manifest" href="/manifest.json">
+<link rel="icon" href="/favicon.png" type="image/x-icon">
+<link rel="stylesheet" href="/book.min.8005b622238f1cff391feb991d3f8254c6e4e5acb4834c7c6dbf6e211d19551b.css" integrity="sha256-gAW2IiOPHP85H&#43;uZHT&#43;CVMbk5ay0g0x8bb9uIR0ZVRs=">
+<script defer src="/en.search.min.f3b14ae6088304167925d8606d26c5c1fa50759915b29300b9369797fc6f4489.js" integrity="sha256-87FK5giDBBZ5JdhgbSbFwfpQdZkVspMAuTaXl/xvRIk="></script>
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-215534783-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+  
+</head>
+
+<body dir=>
+  <input type="checkbox" class="hidden" id="menu-control" />
+  <main class="container flex">
+    <aside class="book-menu">
+      
+  <nav>
+<h2 class="book-brand">
+  <a href="/"><img src="/logo.png" alt="Logo" /><span>Salomon Marquez</span>
+  </a>
+</h2>
+
+
+<div class="book-search">
+  <input type="text" id="book-search-input" placeholder="Search" aria-label="Search" maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+  <hr>
+<p><a href="/posts/"><strong>PORTFOLIO</strong></a></p>
+<hr>
+<p><strong>ABOUT ME</strong></p>
+<ul>
+<li><a href="/#skills">Skills</a></li>
+<li><a href="/#projects">Projects</a></li>
+<li><a href="/#open-source">Open Source</a></li>
+<li><a href="/#presentations">Presentations</a></li>
+<li><a href="/#leadership-initiatives-at-wizeline">Leadership Initiatives</a></li>
+<li><a href="/#certifications">Certifications</a></li>
+<li><a href="/#education">Education</a>
+<!-- raw HTML omitted --></li>
+</ul>
+<hr>
+<p><strong>CONTACT</strong></p>
+<ul>
+<li><a href="mailto:phd.smarquez@gmail.com">phd.smarquez@gmail.com</a>
+<!-- raw HTML omitted --></li>
+</ul>
+<hr>
+<p><strong>LINKS</strong></p>
+<ul>
+<li><a href="/resume/CV_SALOMON_MARQUEZ.pdf">My CV</a></li>
+<li><a href="https://www.linkedin.com/in/sblaizer/">My LinkedIn</a></li>
+<li><a href="https://github.com/sblaizerwize?tab=repositories">My GitHub</a></li>
+<li><a href="https://scholar.google.com.mx/citations?hl=en&amp;user=A91CjSIAAAAJ&amp;view_op=list_works&amp;sortby=pubdate">My Scholar</a></li>
+</ul>
+<hr>
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var menu=document.querySelector("aside.book-menu nav");addEventListener("beforeunload",function(event){localStorage.setItem("menu.scrollTop",menu.scrollTop);});menu.scrollTop=localStorage.getItem("menu.scrollTop");})();</script>
+
+
+ 
+    </aside>
+
+    <div class="book-page">
+      <header class="book-header">
+        
+  <head>
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-215534783-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-215534783-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+</head>
+<div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <strong>Fundamentals of Dictionaries</strong>
+
+  <label for="toc-control">
+    
+    <img src="/svg/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+    <input type="checkbox" class="hidden" id="toc-control" />
+    <aside class="hidden clearfix">
+      
+  <nav id="TableOfContents">
+  <ul>
+    <li><a href="#what-is-a-dictionary"><strong>What is a dictionary?</strong></a></li>
+    <li><a href="#what-differences-a-dictionary-from-a-list"><strong>What differences a dictionary from a list?</strong></a></li>
+    <li><a href="#what-are-the-main-operations-on-dictionaries"><strong>What are the main operations on dictionaries?</strong></a></li>
+    <li><a href="#what-are-some-issues-with-dictionaries"><strong>What are some issues with dictionaries?</strong></a></li>
+    <li><a href="#conclusion"><strong>Conclusion</strong></a></li>
+  </ul>
+</nav>
+
+
+    </aside>
+  
+ 
+      </header>
+
+      
+      
+<article class="markdown">
+  <h1>
+    <a href="/posts/fundamentalsofdictionaries/">Fundamentals of Dictionaries</a>
+  </h1>
+  
+  <h5>Aug 23, 2021</h5>
+
+
+
+  
+  <div>
+    
+      <a href="/categories/article/">article</a>
+  </div>
+  
+
+  
+  <div>
+    
+      <a href="/tags/python/">python</a>, 
+      <a href="/tags/data-structures/">data structures</a>, 
+      <a href="/tags/development/">development</a>
+  </div>
+  
+
+
+  <p><p>Let’s say you want to create an inventory of your video games. You are interested in storing information like name, genre, platforms, and ratings. You would like to access this information simply by knowing the name of the video game. Instead of using a database, you compare how practical it is to use dictionaries rather than lists. With a list, you need to store the information sequentially and scan through the whole list to find a particular video game name. On the other hand, with a dictionary, you can define the video game names as “keys” and the rest of the information as “values”. Therefore, instead of reading every item of the dataset, you simply look up the name of the video game (key) to access the information (values).</p>
+<h2 id="what-is-a-dictionary"><strong>What is a dictionary?</strong></h2>
+<p>A dictionary is a data structure that contains a collection of objects. It represents these objects as key-value pairs. Similar to the key that grants you access to your house’s possessions, dictionaries use keys to get a direct reference to a group of objects. In this sense, a key is unique as each house is. You can grab objects from a dictionary by simply knowing their key. In the literature, you may find other names for dictionaries such as associative arrays, maps, hashes, and hashmaps.</p>
+<h2 id="what-differences-a-dictionary-from-a-list"><strong>What differences a dictionary from a list?</strong></h2>
+<p>What differentiates dictionaries from lists is uniqueness and order. Dictionaries have keys rather than indexes. Each key is unique. Because there are no indexes, elements in a dictionary cannot be sorted out. Therefore, when you add a new key-value pair to a dictionary, it is allocated with no intrinsic order. Keys generally use integers and strings as data types. Values, on the other hand, are not unique and can be of any data type, as shown in <strong>Fig. 1</strong>.</p>
+<p><img src="
+
+https://sblaizerwize.github.io/blog/dictionary.png" alt="Dictionary" />
+<strong>Fig. 1</strong> A sample dictionary that includes three key-value pairs from a video game collection<br>
+ </p>
+<h2 id="what-are-the-main-operations-on-dictionaries"><strong>What are the main operations on dictionaries?</strong></h2>
+<p>The syntaxis and features of dictionaries vary across programming languages. <a href="https://en.wikipedia.org/wiki/Comparison_of_programming_languages_%28associative_array%29">Here</a> is a comparison of dictionary features over 40 programming languages. However, typically you can perform the following tasks using dictionaries:</p>
+<ul>
+<li>Lookup a value using its key</li>
+<li>Insert a new key-value pair</li>
+<li>Update a value</li>
+<li>Remove a key-value pair</li>
+</ul>
+<h2 id="what-are-some-issues-with-dictionaries"><strong>What are some issues with dictionaries?</strong></h2>
+<p>Dictionaries are quite efficient for lookup and insertion operations. They can get the same performance as lists by turning keys into list indexes using a <a href="https://en.wikipedia.org/wiki/Hash_function">hash function</a>. However, when the elements of a dictionary increase, to process for example <a href="https://towardsdatascience.com/python-memory-and-objects-e7bec4a2845">big data</a>, they can consume a lot of resources because they <a href="https://lerner.co.il/2019/05/12/python-dicts-and-memory-usage/">allocate more memory</a> than they need. Hence, it is essential to be mindful and know your use case scenario for using dictionaries to store and access information.</p>
+<h2 id="conclusion"><strong>Conclusion</strong></h2>
+<p>In sum, dictionaries represent an efficient way to store and access a collection of objects. These objects have arbitrary indexing and are stored as key-value pairs. If you want to know more about dictionaries, you can consult the following resources:</p>
+<ul>
+<li><a href="https://en.wikibooks.org/wiki/A-level_Computing/AQA/Paper_1/Fundamentals_of_data_structures/Dictionaries#:~:text=A%20dictionary%20is%20a%20general,has%20a%20single%20associated%20value.&amp;text=Typically%2C%20the%20keys%20in%20a,can%20be%20of%20any%20type.">Fundamentals of data structures: Dictionaries</a></li>
+<li><a href="https://medium.com/@the.asantiagojr/whats-the-use-of-a-dictionary-data-structure-with-javascript-620ce087fa65">What’s the use of a Dictionary Data Structure? — With JavaScript</a></li>
+<li><a href="https://www.oreilly.com/library/view/high-performance-python/9781449361747/ch04.html#dict_set_how_work">Dictionaries and Sets</a></li>
+</ul>
+</p>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+
+
+
+
+</div>
+
+ 
+        
+      </footer>
+
+      
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+    <aside class="book-toc">
+      
+  <nav id="TableOfContents">
+  <ul>
+    <li><a href="#what-is-a-dictionary"><strong>What is a dictionary?</strong></a></li>
+    <li><a href="#what-differences-a-dictionary-from-a-list"><strong>What differences a dictionary from a list?</strong></a></li>
+    <li><a href="#what-are-the-main-operations-on-dictionaries"><strong>What are the main operations on dictionaries?</strong></a></li>
+    <li><a href="#what-are-some-issues-with-dictionaries"><strong>What are some issues with dictionaries?</strong></a></li>
+    <li><a href="#conclusion"><strong>Conclusion</strong></a></li>
+  </ul>
+</nav>
+
+ 
+    </aside>
+    
+  </main>
+
+  
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

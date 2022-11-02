@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>article on Salomon Marquez</title>
+    <link>https://sblaizerwize.github.io/categories/article/</link>
+    <description>Recent content in article on Salomon Marquez</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 01 Nov 2022 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://sblaizerwize.github.io/categories/article/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Deploy Airbyte on a Microsoft Azure VM</title>
+      <link>https://sblaizerwize.github.io/posts/airbyte-azure-vm/</link>
+      <pubDate>Tue, 01 Nov 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://sblaizerwize.github.io/posts/airbyte-azure-vm/</guid>
+      <description>Disclaimer:
+I created this document based on an open source contribution to Airbyte. Please refer to the source document at Deploy on Azure   This page guides you through deploying Airbyte Open Source on a Microsoft Azure VM by setting up the deployment environment, installing and starting Airbyte, and connecting it to the VM.
+Note:
+The instructions have been tested on a standard DS1 v2 (1 vcpu, 3.5 GiB memory) Microsoft Azure VM with Ubuntu 18.</description>
+    </item>
+    
+    <item>
+      <title>What Are Two Key Differences Between BigQuery and Redshift?</title>
+      <link>https://sblaizerwize.github.io/posts/bigqueryvsredshift/</link>
+      <pubDate>Wed, 15 Dec 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://sblaizerwize.github.io/posts/bigqueryvsredshift/</guid>
+      <description>Big Data. We often hear about this word but we aren’t quite sure how to define it. Literature says that having more than 1 TB of data can be considered as Big Data. After getting a mild idea of the concept, our next question would be: How can we manage such a large amount of data to find useful insights out of it? Well, one approach that can answer this lies in data warehousing.</description>
+    </item>
+    
+    <item>
+      <title>How to Create Python Packages</title>
+      <link>https://sblaizerwize.github.io/posts/pythonpackages/</link>
+      <pubDate>Tue, 14 Dec 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://sblaizerwize.github.io/posts/pythonpackages/</guid>
+      <description>A Python package is a collection of modules. A module is the easiest way to import and reuse existing Python code that’s developed by other programmers. In simple terms, a package is a module, but not all modules are packages. So, the question that raises is: what differentiates a package from a module? The response lies in a file named __init__.py, which indicates that the folder directory is a package. In this article, we’ll walk you through the main concepts and steps about how to create, install, publish, and test your own Python package locally and globally.</description>
+    </item>
+    
+    <item>
+      <title>Fundamentals of Dictionaries</title>
+      <link>https://sblaizerwize.github.io/posts/fundamentalsofdictionaries/</link>
+      <pubDate>Mon, 23 Aug 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://sblaizerwize.github.io/posts/fundamentalsofdictionaries/</guid>
+      <description>Let’s say you want to create an inventory of your video games. You are interested in storing information like name, genre, platforms, and ratings. You would like to access this information simply by knowing the name of the video game. Instead of using a database, you compare how practical it is to use dictionaries rather than lists. With a list, you need to store the information sequentially and scan through the whole list to find a particular video game name.</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>bluesnap on Salomon Marquez</title>
+    <link>https://sblaizerwize.github.io/tags/bluesnap/</link>
+    <description>Recent content in bluesnap on Salomon Marquez</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 23 Jan 2020 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://sblaizerwize.github.io/tags/bluesnap/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>API Documentation</title>
+      <link>https://sblaizerwize.github.io/posts/api-guide/</link>
+      <pubDate>Thu, 23 Jan 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://sblaizerwize.github.io/posts/api-guide/</guid>
+      <description>This document explains the implementation of BlueSnap payment processor with SampleClient web services. It describes the payment logic, provides use cases, and shows the payment sequence diagrams for each case. The target audience of this document includes stakeholders, developers, and project managers from SampleClient and MyEnterprise.
+ Overview SampleClient requires to integrate BlueSnap as an alternative payment processor for its web services. SampleClient payment processors include:
+ Stripe Humboldt Paysafe Safecharge  The first stage of BlueSnap implementation with SampleClient enables payments using a credit card.</description>
+    </item>
+    
+  </channel>
+</rss>
