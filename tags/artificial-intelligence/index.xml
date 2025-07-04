@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>artificial intelligence on Salomon Marquez</title>
+    <link>https://sblaizerwize.github.io/tags/artificial-intelligence/</link>
+    <description>Recent content in artificial intelligence on Salomon Marquez</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 01 Mar 2024 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://sblaizerwize.github.io/tags/artificial-intelligence/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Your Simple Guide to use ChatGPT via the OpenAI API</title>
+      <link>https://sblaizerwize.github.io/posts/use-chatgpt-with-python/</link>
+      <pubDate>Fri, 01 Mar 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://sblaizerwize.github.io/posts/use-chatgpt-with-python/</guid>
+      <description>ChatGPT is a state-of-the-art language model developed by OpenAI. It serves many purposes in natural language processing, including language translation, chatbots, and story writing, among others.
+This guide describes how to utilize ChatGPT through the OpenAI API service on macOS operating systems. Additionally, it provides instructions for interacting with ChatGPT using Python.
+ Connect to ChatGPT via API To set up ChatGPT API follow these instructions:
+ Set up an API Key Sign up to OpenAI and follow the indications to create a new secret key.</description>
+    </item>
+    
+  </channel>
+</rss>

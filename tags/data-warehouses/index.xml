@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>data warehouses on Salomon Marquez</title>
+    <link>https://sblaizerwize.github.io/tags/data-warehouses/</link>
+    <description>Recent content in data warehouses on Salomon Marquez</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 15 Dec 2021 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://sblaizerwize.github.io/tags/data-warehouses/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>What Are Two Key Differences Between BigQuery and Redshift?</title>
+      <link>https://sblaizerwize.github.io/posts/bigqueryvsredshift/</link>
+      <pubDate>Wed, 15 Dec 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://sblaizerwize.github.io/posts/bigqueryvsredshift/</guid>
+      <description>Big Data. We often hear about this word but we aren’t quite sure how to define it. Literature says that having more than 1 TB of data can be considered as Big Data. After getting a mild idea of the concept, our next question would be: How can we manage such a large amount of data to find useful insights out of it? Well, one approach that can answer this lies in data warehousing.</description>
+    </item>
+    
+  </channel>
+</rss>

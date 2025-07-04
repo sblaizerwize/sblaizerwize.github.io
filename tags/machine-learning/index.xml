@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>machine learning on Salomon Marquez</title>
+    <link>https://sblaizerwize.github.io/tags/machine-learning/</link>
+    <description>Recent content in machine learning on Salomon Marquez</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 23 Jan 2024 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://sblaizerwize.github.io/tags/machine-learning/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Secret Ingredients Found in Kaggle Competitions from 2021 to 2023</title>
+      <link>https://sblaizerwize.github.io/posts/top5-kaggle-competitions-2023/</link>
+      <pubDate>Tue, 23 Jan 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://sblaizerwize.github.io/posts/top5-kaggle-competitions-2023/</guid>
+      <description>In May 2023, Kaggle launched the AI Report competition. The aim was to summarize what the ML community has learned about working and experimenting with AI over the past two years. The competition considered seven pivotal categories: text data, image and video data, tabular and time series data, Kaggle competitions, Generative AI, ethics, and others. Overall, 220 teams and 279 competitors submitted their reports, and a panel of seven Kaggle Grandmasters reviewed them to select the best of them in each category.</description>
+    </item>
+    
+  </channel>
+</rss>

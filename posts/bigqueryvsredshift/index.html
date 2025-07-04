@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en" dir=>
+
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Big Data. We often hear about this word but we aren’t quite sure how to define it. Literature says that having more than 1 TB of data can be considered as Big Data. After getting a mild idea of the concept, our next question would be: How can we manage such a large amount of data to find useful insights out of it? Well, one approach that can answer this lies in data warehousing.">
+<meta name="theme-color" content="#FFFFFF"><meta property="og:title" content="What Are Two Key Differences Between BigQuery and Redshift?" />
+<meta property="og:description" content="Big Data. We often hear about this word but we aren’t quite sure how to define it. Literature says that having more than 1 TB of data can be considered as Big Data. After getting a mild idea of the concept, our next question would be: How can we manage such a large amount of data to find useful insights out of it? Well, one approach that can answer this lies in data warehousing." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://sblaizerwize.github.io/posts/bigqueryvsredshift/" />
+<meta property="article:published_time" content="2021-12-15T00:00:00+00:00" />
+<meta property="article:modified_time" content="2021-12-15T00:00:00+00:00" />
+<title>What Are Two Key Differences Between BigQuery and Redshift? | Salomon Marquez</title>
+<link rel="manifest" href="/manifest.json">
+<link rel="icon" href="/favicon.png" type="image/x-icon">
+<link rel="stylesheet" href="/book.min.8005b622238f1cff391feb991d3f8254c6e4e5acb4834c7c6dbf6e211d19551b.css" integrity="sha256-gAW2IiOPHP85H&#43;uZHT&#43;CVMbk5ay0g0x8bb9uIR0ZVRs=">
+<script defer src="/en.search.min.f63563102a6e4958f8531e5d06d632fdfa6371919667c73b700023e11ccc7e4c.js" integrity="sha256-9jVjECpuSVj4Ux5dBtYy/fpjcZGWZ8c7cAAj4RzMfkw="></script>
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-215534783-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+  
+</head>
+
+<body dir=>
+  <input type="checkbox" class="hidden" id="menu-control" />
+  <main class="container flex">
+    <aside class="book-menu">
+      
+  <nav>
+<h2 class="book-brand">
+  <a href="/"><img src="/logo.png" alt="Logo" /><span>Salomon Marquez</span>
+  </a>
+</h2>
+
+
+<div class="book-search">
+  <input type="text" id="book-search-input" placeholder="Search" aria-label="Search" maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+  <hr>
+<p><strong>DOCUMENTATION SAMPLES</strong></p>
+<ul>
+<li><a href="/posts/">Portfolio</a></li>
+</ul>
+<hr>
+<p><strong>ABOUT ME</strong></p>
+<ul>
+<li><a href="/#skills">Skills</a></li>
+<li><a href="/#projects">Projects</a></li>
+<li><a href="/#open-source">Open Source</a></li>
+<li><a href="/#presentations">Presentations</a></li>
+<li><a href="/#leadership-initiatives-at-wizeline">Leadership Initiatives</a></li>
+<li><a href="/#certifications">Certifications</a></li>
+<li><a href="/#education">Education</a>
+<!-- raw HTML omitted --></li>
+</ul>
+<hr>
+<p><strong>CONTACT</strong></p>
+<ul>
+<li><a href="mailto:phd.smarquez@gmail.com">phd.smarquez@gmail.com</a>
+<!-- raw HTML omitted --></li>
+</ul>
+<hr>
+<p><strong>LINKS</strong></p>
+<ul>
+<li><a href="/resume/CV_SALOMON_MARQUEZ.pdf">My CV</a></li>
+<li><a href="https://www.linkedin.com/in/sblaizer/">My LinkedIn</a></li>
+<li><a href="https://github.com/sblaizerwize?tab=repositories">My GitHub</a></li>
+<li><a href="https://scholar.google.com.mx/citations?hl=en&amp;user=A91CjSIAAAAJ&amp;view_op=list_works&amp;sortby=pubdate">My Scholar</a></li>
+</ul>
+<hr>
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var menu=document.querySelector("aside.book-menu nav");addEventListener("beforeunload",function(event){localStorage.setItem("menu.scrollTop",menu.scrollTop);});menu.scrollTop=localStorage.getItem("menu.scrollTop");})();</script>
+
+
+ 
+    </aside>
+
+    <div class="book-page">
+      <header class="book-header">
+        
+  <head>
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-215534783-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-215534783-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+</head>
+<div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <strong>What Are Two Key Differences Between BigQuery and Redshift?</strong>
+
+  <label for="toc-control">
+    
+    <img src="/svg/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+    <input type="checkbox" class="hidden" id="toc-control" />
+    <aside class="hidden clearfix">
+      
+  <nav id="TableOfContents">
+  <ul>
+    <li><a href="#why-is-columnar-data-storage-important-for-data-warehouses"><strong>Why Is Columnar Data Storage Important for Data Warehouses?</strong></a></li>
+    <li><a href="#using-redshift-or-bigquery-does-it-matter"><strong>Using Redshift or BigQuery, Does It Matter?</strong></a>
+      <ul>
+        <li><a href="#how-does-redshift-architecture-differ-from-that-of-bigquery"><strong>How Does Redshift Architecture Differ From That of BigQuery?</strong></a></li>
+        <li><a href="#is-redshift-more-expensive-than-bigquery"><strong>Is Redshift More Expensive Than BigQuery?</strong></a></li>
+      </ul>
+    </li>
+    <li><a href="#so-which-data-warehouse-is-better-to-use"><strong>So, Which Data Warehouse Is Better To Use?</strong></a></li>
+  </ul>
+</nav>
+
+
+    </aside>
+  
+ 
+      </header>
+
+      
+      
+<article class="markdown">
+  <h1>
+    <a href="/posts/bigqueryvsredshift/">What Are Two Key Differences Between BigQuery and Redshift?</a>
+  </h1>
+  
+  <h5>Dec 15, 2021</h5>
+
+
+
+  
+  <div>
+    
+      <a href="/categories/article/">article</a>
+  </div>
+  
+
+  
+  <div>
+    
+      <a href="/tags/bigquery/">bigquery</a>, 
+      <a href="/tags/data-warehouses/">data warehouses</a>, 
+      <a href="/tags/redshift/">redshift</a>
+  </div>
+  
+
+
+  <p><p>Big Data. We often hear about this word but we aren’t quite sure how to define it. <a href="https://journals.sagepub.com/doi/10.1177/2053951716631130">Literature</a> says that having more than 1 TB of data can be considered as Big Data. After getting a mild idea of the concept, our next question would be: How can we manage such a large amount of data to find useful insights out of it? Well, one approach that can answer this lies in data warehousing.</p>
+<p>A data warehouse is a data management system for storing and analyzing historical data. It enables business intelligence (BI) to perform queries and analysis on data. From <a href="https://aws.amazon.com/blogs/industries/aws-is-how-ge-renewable-energy-increases-wind-energy-production/?did=cr_card&amp;trk=cr_card">renewable energy</a> (General Electric) and <a href="https://www.youtube.com/watch?v=GdyjPwsn9wc&amp;list=PLBgogxgQVM9tH8WRvL8lVBuqZaRujC1vT&amp;index=8&amp;t=2s">clothing industry</a> (American Eagle) to long-distance <a href="https://cloud.google.com/customers/blablacar/">carpooling</a> platforms (BlaBlaCar), enterprises rely on data warehouses to help them understand their customers’ experience by analyzing their logs over time.</p>
+<p>In this article, we’ll compare the architecture and price of two of the major data warehouses currently leading the data market: AWS Redshift and BigQuery. Let’s get started!</p>
+<hr>
+<h2 id="why-is-columnar-data-storage-important-for-data-warehouses"><strong>Why Is Columnar Data Storage Important for Data Warehouses?</strong></h2>
+<p>Accountants often use spreadsheets to report and keep track of their clients’ financial statements. By sequentially filling out data in rows, accountants can store from thousands to millions of financial entries. As this information grows, it can take up a lot of disk storage, and most importantly, when accountants perform any analysis on this data, reading each entry row-by-row ends up in a very time-consuming task.</p>
+<p>Data warehouses, on the other hand, store data more efficiently in columns rather than in rows. The <strong><a href="https://docs.aws.amazon.com/redshift/latest/dg/c_columnar_storage_disk_mem_mgmnt.html">columnar data storage</a></strong> allows them to keep data closer together reducing seek time. A columnar design is also advantageous for preparing data for further distribution on several processing units. Data warehouses split up data and processing power among multiple compute resources that execute and coordinate operations simultaneously and in parallel, a process called <strong>massive parallel processing (MPP)</strong>.</p>
+<p>The row and columnar data design introduce two data processing capabilities: online transaction processing (OLTP) and online analytical processing (OLAP). <strong>OLTP transactions</strong> typically involve most or all of the columns in a row. Examples of this type are banking and ATM transactions that store data as a single record in a row. On the other hand, <strong>OLAP transactions</strong> read only a few columns from a very large number of rows. As you will see in the following section, this is the type of transactions that are involved with data warehouses.</p>
+<hr>
+<h2 id="using-redshift-or-bigquery-does-it-matter"><strong>Using Redshift or BigQuery, Does It Matter?</strong></h2>
+<p>Now that you have a quick refresher of the fundamental concepts about data warehouses, let’s compare Redshift and BigQuery, which are two popular columnar storage-oriented data warehouses. In this section, we’ll help you decide which one to go with in terms of their architectural design and cost.</p>
+<hr>
+<h3 id="how-does-redshift-architecture-differ-from-that-of-bigquery"><strong>How Does Redshift Architecture Differ From That of BigQuery?</strong></h3>
+<p>Let’s review the architectural styles of both data warehouses.</p>
+<h4 id="redshift"><strong>Redshift</strong></h4>
+<p><a href="https://aws.amazon.com/redshift/?whats-new-cards.sort-by=item.additionalFields.postDateTime&amp;whats-new-cards.sort-order=desc">AWS Redshift</a> is a managed warehousing solution that is based on <a href="https://www.postgresql.org/">PostgreSQL</a>. This is why it can be considered as a Relational Database Management System (RDBMS) compatible with most SQL clients applications and powerful enough to handle OLTP operations over rows. However, Redshift infrastructure goes far beyond because it is designed and optimized to manage Big Data workloads. In Redshift, you can create tables but their storage format will be slightly different from that of PostgreSQL. This is because Redshift stores data in a columnar format that improves query efficiency and speed.</p>
+<p>The core of Redshift are clusters. A cluster is a collection of compute nodes. When a cluster includes two or more compute nodes, Redshift leverages a third node, known as the leader node, to orchestrate the incoming workload, see <strong>Figure 1</strong>. This node is the main point of contact between the client application and the compute nodes. The main responsibilities of the leader node are:</p>
+<ul>
+<li>Elaborate and execution plan</li>
+<li>Distribute data and workloads across compute nodes</li>
+<li>Gather results from compute nodes</li>
+</ul>
+<p><img src="
+
+https://sblaizerwize.github.io/blog/redshiftArchitecture.png" alt="redshiftArchitecture" /> <em><strong>Figure 1. AWS Redshift architecture. Reference from <a href="https://docs.aws.amazon.com/redshift/latest/dg/c_high_level_system_architecture.html">AWS resources</a>.</strong></em><br>
+ </p>
+<p>The capacity of a Redshift cluster is determined by the number of compute nodes and the node type. Each compute node has its own compute resources such as CPU, memory, and attached storage. The compute nodes redistribute compute resources across node slices and thus each node slice can have a compute power of a single CPU. All communications across nodes are handled through an internal AWS network.</p>
+<p>Likewise resources, Redshift apportions user data in tables following a styling distribution scheme. Besides, you can select a column in a table that decides upon the sorting order of your data by using a sort key. This practice leverages data throughput and efficiency.</p>
+<p>The interaction between AWS Redshift components resembles a Poker game played in teams. The dealer (<strong>lead node</strong>) is the point of contact between the cassino owner and the customers. Let’s say that the dealer sorts and distributes a deck of five cards across three teams, each one is led by a team leader (<strong>compute node</strong>) and composed by three members (<strong>node slices</strong>). Then, the team leader can redistribute the five cards among their teammates based on the card’s suit, color, or number (<strong>distribution style</strong>). When it is time to expose and compare hands to determine a winner, the leaders gather all cards (<strong>aggregates</strong>) from their teams and give them back to the dealer. Finally, the dealer notifies the house who is the winner.</p>
+<h4 id="bigquery"><strong>BigQuery</strong></h4>
+<p><a href="https://cloud.google.com/bigquery?utm_source=google&amp;utm_medium=cpc&amp;utm_campaign=latam-MX-all-es-dr-SKWS-all-all-trial-e-dr-1009897-LUAC0009352&amp;utm_content=text-ad-none-any-DEV_c-CRE_431378401113-ADGP_Hybrid%20%7C%20SKWS%20-%20EXA%20%7C%20Txt%20~%20Data-Analytics_BigQuery-KWID_43700043798699331-kwd-372661971564&amp;utm_term=KW_bigquery-ST_BigQuery&amp;gclid=Cj0KCQjw18WKBhCUARIsAFiW7JwZsbF5kaM3WsPU1qoHk0DNicvnoosvL4721qOu1ibO4_M688ibVxcaAqijEALw_wcB&amp;gclsrc=aw.ds">BigQuery</a> is a serverless data warehouse solution. Serverless means that you don’t need to worry about provisioning your infrastructure, BigQuery takes care of allocating resources on your behalf. Interestingly, its architecture decouples compute from storage, which means that you first have to bring your data, of any size, and then analyze it using standard SQL syntax. Under the hood, BigQuery employs low-level Google technologies such as Dremel, Borg, Colossus, and Jupiter to operate, as <strong>Figure 2</strong> shows.</p>
+<p><img src="
+
+https://sblaizerwize.github.io/blog/bigqueryArchitecture.png" alt="bigqueryArchitecture" /> <em><strong>Figure 2. High-level architecture of BigQuery. Reference from <a href="https://panoply.io/data-warehouse-guide/bigquery-architecture/">Panoply</a></strong></em><br>
+ </p>
+<p>Let’s provide a summary of each technology:</p>
+<p><strong>Dremel</strong>. It handles computations and executes SQL queries. Depending on your query size and complexity, Dremel automatically calculates how many slots are required. A slot is a virtual CPU that represents the fundamental compute element of BigQuery. Dremel dynamically distributes queries from the client application to slots following an execution plan that resembles a tree structure. As <strong>Figure 2</strong> shows, the execution plan starts on a root server (<strong>trunk</strong>) that apportions the workload across mixer nodes (<strong>branches</strong>). Mixers, in turn, redistribute the workload among leaf nodes (<strong>leaves</strong>), and so on.</p>
+<p><strong>Borg</strong>. It is an orchestrator that provisions root servers, mixer nodes, leaf nodes, and slots with hardware resources.</p>
+<p><strong>Colossus</strong>. It is the global storage system. Colossus servers store data in a columnar storage format and use a compression algorithm for handling Big Data optimally. Colossus’ primary tasks include fetching data to leaf nodes and handling data replication and recovery.</p>
+<p><strong>Jupyter</strong>. It is a Petabit network that establishes communication between compute and storage resources.</p>
+<p>To understand BigQuery’s architecture, we can use a restaurant metaphor. You as the customer (<strong>client application</strong>) order a meal from the menu. The waiter (<strong>root server</strong>) takes your order to the chef (<strong>mixer</strong>). The chef then apportions your order across three groups of cooks (<strong>leaf nodes</strong>). Each group is responsible for preparing a specific component of your dish: salad, soup, and red meat. To start, the cooks need to gather all the ingredients from a big fridge (<strong>global storage system</strong>) located in another section of the kitchen. When each portion of your order is ready, the chef gathers each element, validates its flavour and quality, and turns it into a nice looking dish (<strong>aggregates</strong>). The chef passes on your meal to the waiter. Finally, the waiter serves the dish on your table. Bon appetit!</p>
+<h4 id="answer"><strong>Answer</strong></h4>
+<p>How does Redshift architecture differ from that of BigQuery? Primarily, Redshift is a node-based solution and BigQuery is a serverless solution. This translates into ease of use for the end-user. The following table shows the main architectural differences for both data warehouses:</p>
+
+
+<table>
+  <tr>
+   <td><strong>Redshift </strong>
+   </td>
+   <td><strong>BigQuery</strong>
+   </td>
+  </tr>
+  <tr>
+   <td>It’s a node-based data warehouse
+   </td>
+   <td>It's a serverless data warehouse solution
+   </td>
+  </tr>
+  <tr>
+   <td>Couples compute and storage resources
+   </td>
+   <td>Decouples compute and storage resources 
+   </td>
+  </tr>
+  <tr>
+   <td>Follows a top-down node hierarchy to execute queries
+   </td>
+   <td>Follows a top-down slot hierarchy to execute queries
+   </td>
+  </tr>
+  <tr>
+   <td>Requires to define beforehand the node type and number of nodes for your cluster unless you turn on <a href="https://docs.aws.amazon.com/redshift/latest/dg/concurrency-scaling.html">concurrency scaling</a> (might incur extra charges)
+   </td>
+   <td>Scales up slots automatically based on on-demand workloads 
+   </td>
+  </tr>
+</table>
+
+
+
+<hr>
+<h3 id="is-redshift-more-expensive-than-bigquery"><strong>Is Redshift More Expensive Than BigQuery?</strong></h3>
+<p>Let’s look at how the different architectures affect the cost of both solutions.</p>
+<h4 id="redshift-1"><strong>Redshift</strong></h4>
+<p>As you can see in the previous section, AWS Redshift is a node-based data warehouse. Therefore, if you want to estimate the cost of your cluster, you need to determine beforehand the number of nodes and node types that your job will require. Determining the node size of your cluster is beyond the scope of this article, but you can find more information in <a href="https://docs.aws.amazon.com/redshift/latest/mgmt/working-with-clusters.html#rs-about-clusters-and-nodes">About clusters and nodes</a>. Let’s discuss about the three node types that AWS Redshift has:</p>
+<ul>
+<li><strong>Dense Computing (DC2)</strong>. Let’s consider the scenario where your data requires thousands of joins and aggregations of some of your results. Noticeably, these operations will consume a lot of compute resources. DC2 nodes are optimized to handle this type of compute-intense operations by providing compute resources with attached SSD storage. If your workload is not meant to grow, consider this node type as your best choice, otherwise you’ll need to add more nodes manually in order to store your results.</li>
+<li><strong>Dense Storage (DS2)</strong>. With this node you can create data warehouses that sit on hard disk drives (HDDs) resources. AWS recommends the usage of RA3 instead of DS2 nodes because of their <a href="https://aws.amazon.com/blogs/apn/amazon-redshift-benchmarking-comparison-of-ra3-vs-ds2-instance-types/">better performance and cost</a>.</li>
+<li><strong>RA3</strong>. Perhaps you prefer an infrastructure that allows you to choose the number of nodes that you require and handle for you your storage resources. RA3 nodes fit into this category by implementing a managed storage solution that is independent from the compute resources. It takes away the burden of using DC2 nodes. RA3 nodes are optimal for BigData applications that require a storage solution that might scale up. In the event that the capacity of the SSD drive attached to the node is exceeded, RA3 nodes can scale their storage capacity by mananing offloads to S3 buckets without extra charges for using AWS S3.</li>
+</ul>
+<p>The following table shows the cheapest node that you can spin up from each node type category. Extracted from AWS.</p>
+
+
+<table>
+  <tr>
+   <td><strong>Node Type</strong>
+   </td>
+   <td><strong>vCPU</strong>
+   </td>
+   <td><strong>Memory</strong>
+   </td>
+   <td><strong>Addressable storage capacity</strong>
+   </td>
+   <td><strong>I/O</strong>
+   </td>
+   <td><strong>Price</strong>
+   </td>
+  </tr>
+  <tr>
+   <td><strong>Dense Compute DC2</strong>
+   </td>
+   <td>
+   </td>
+   <td>
+   </td>
+   <td>
+   </td>
+   <td>
+   </td>
+   <td>
+   </td>
+  </tr>
+  <tr>
+   <td>dc2.large
+   </td>
+   <td>2
+   </td>
+   <td>15 GiB
+   </td>
+   <td>0.16TB SSD
+   </td>
+   <td>0.60 GB/s
+   </td>
+   <td>$0.25 per Hour
+   </td>
+  </tr>
+  <tr>
+   <td><strong>Dense Storage DS2</strong>
+   </td>
+   <td>
+   </td>
+   <td>
+   </td>
+   <td>
+   </td>
+   <td>
+   </td>
+   <td>
+   </td>
+  </tr>
+  <tr>
+   <td>ds2.xlarge
+   </td>
+   <td>4
+   </td>
+   <td>31 GiB
+   </td>
+   <td>2TB HDD
+   </td>
+   <td>0.40 GB/s
+   </td>
+   <td>$0.85 per Hour
+   </td>
+  </tr>
+  <tr>
+   <td><strong>RA3 with Redshift Managed Storage</strong>
+   </td>
+   <td>
+   </td>
+   <td>
+   </td>
+   <td>
+   </td>
+   <td>
+   </td>
+   <td>
+   </td>
+  </tr>
+  <tr>
+   <td>ra3.xlplus
+   </td>
+   <td>4
+   </td>
+   <td>32 GiB
+   </td>
+   <td>32TB RMS
+   </td>
+   <td>0.65 GB/s
+   </td>
+   <td>$1.086 per Hour
+   </td>
+  </tr>
+</table>
+
+
+
+<p>Once you have chosen the node type and number of nodes for your cluster, you can take the most out of AWS pricing models:</p>
+<ul>
+<li><strong>On-demand pricing model</strong>. Use this payment scheme under the basis of paying for what you use. There are no strings attached. Once you are done processing your data workload, you just simply turn off your cluster to avoid extra costs. This principing model is hourly rated, it follows the list of prices per node type described in the table above. So, the cheapest node you can run will cost you $0.25 per hour.</li>
+<li><strong>Reserved Instances pricing model</strong>. If you consistently plan ahead your workloads, let’s say you run a job on a timely-basis, you can reserve nodes for one or three years. With this payment model, you can save up to 75%  on on-demand prices ($0.0625 per hour for the cheapest node) when choosing for example an upfront payment option. If you have a limited initial budget, you can also explore other alternatives such as no upfront and partial upfront payment schemes.</li>
+<li><strong>Spot instances pricing model</strong>. In case that you have spiky workloads runned at no particular schedule, you can consider this pricing model for your cluster. Let’s say that you need to extract, transform and load a batch of your data into an S3 bucket by the end of the day. This job takes you around 10 to 15 min. For this type of operation, AWS can offer you spare infrastructure for a short timeframe saving up-to 90% on on-demand prices ($0.025 per hour for the cheapest node). However, you should keep in mind that AWS can claim back these resources at any time.</li>
+</ul>
+<h4 id="bigquery-1"><strong>BigQuery</strong></h4>
+<p>BigQuery adds one layer of complexity to its pricing model because it splits up compute from storage resources. If you want to estimate your bill, keep in mind the following components of BigQuery pricing:</p>
+<ul>
+<li><strong>Analysis.</strong> It is the cost of running queries, scripts, or functions. BigQuery offers two schemes: on-demand and flat-rate pricing. The on-demand scheme allows you to pay for the number of bytes processed by each query at a cost of $5 per TB. The amount of data processed by queries includes all selected data per column. Under this scheme, the slots units are not dedicated, which means that BigQuery can share this infrastructure with other clusters. If, on the other hand, you want to provision your cluster with dedicated infrastructure, the flat-rate pricing is your best choice. This is a region-oriented pricing scheme where you commit to the use of resources for a specific period of time:
+<ul>
+<li><strong>Per second</strong>. You pay for the use of 100 slots for $2920 per month. The commitment duration is only 60 seconds. You can cancel anytime once your commitment purchase is successful. Keep in mind that slots availability is not guaranteed.</li>
+<li><strong>Per month</strong>. You pay for the use of 100 slots for $2000 per month.</li>
+<li>**Per year. **You pay for the use of 100 slots for $1700 per month.</li>
+</ul>
+</li>
+<li><strong>Storage.</strong> It is the cost of storing your data. BigQuery offers two schemes: active and long-term storage. The difference between both schemes relies upon the storage time frame. If you modify a table or partition of a table in the last 90 days (active storage), BigQuery charges you $0.02 per GB. In case that you exceed 90 consecutive days without doing any modification on your tables (long-term storage), BigQuery offers you a 50% discount on the active storage. For more details check <a href="https://cloud.google.com/bigquery/pricing#data">Data size calculation</a>.</li>
+<li><strong>Extras.</strong> It includes costs related to data ingestion and extraction.</li>
+</ul>
+<h4 id="answer-1"><strong>Answer</strong></h4>
+<p>Is Redshift more expensive than BigQuery? Well, It depends on your use case. Here are the main takeaways about costs for both data warehouses:</p>
+
+
+<table>
+  <tr>
+   <td><strong>Redshift</strong>
+   </td>
+   <td><strong>BigQuery</strong>
+   </td>
+  </tr>
+  <tr>
+   <td>Costs depend on the node type and number of nodes per cluster
+   </td>
+   <td>It has two main pricing components: analysis and storage
+   </td>
+  </tr>
+  <tr>
+   <td>Node types include DC2, DS2, and RA3 nodes. 
+   </td>
+   <td>Storage component comprises active and long-term storage pricing. You pay $0.02 per GB for modified tables in the last 90 days.
+   </td>
+  </tr>
+  <tr>
+   <td>Nodes have hourly rates. The cheapest DC2 node you can spin up will cost you $0.25/h.
+   </td>
+   <td>Analysis component comprises on-demand and flat-rate pricing. You pay $5 per TB for the number of bytes processed by each query 
+   </td>
+  </tr>
+  <tr>
+   <td>You can find great deals by reserving instances using upfront, no upfront, and partial upfront pricing schemes. 
+   </td>
+   <td>You can find great deals by committing to the use of resources for a specific period of time: per second, per month, and per year. 
+   </td>
+  </tr>
+</table>
+
+
+
+<hr>
+<h2 id="so-which-data-warehouse-is-better-to-use"><strong>So, Which Data Warehouse Is Better To Use?</strong></h2>
+<p>We don’t have in fact an actual winner out of this comparison article. Both Redshift and BigQuery are data warehouses that have gained their status as leading products in the current data market. However, through our analysis of their architectural style and cost, we have identified differences that can help you decide when to choose a data warehouse solution based on your needs.</p>
+<p>In our opinion, Redshift’s architecture provides greater flexibility to end-users to fine-tune resources according to their needs, which can impact on performance and cost. However, Redshift end-users should have an intermediate technical knowledge base to provision compute nodes by choosing the correct node type and the right number of nodes. In terms of cost, Redshift establishes hourly rates per cluster, which is quite cost-effective for programmed workloads like ETLs.</p>
+<p>On the other hand, BigQuery’s serverless solution brings simplicity. Provisioning of resources is on BigQuery’s behalf, which can benefit entry-level end-users who only need to upload their data and start creating SQL queries. Because BigQuery decouples storage and compute, estimating costs based on its pricing model is rather complex. However, we believe that BigQuery is optimal for spiky workloads because it charges you per processed data instead of having to pay a full hour.</p>
+<p>We encourage you to take a step further this fundamental understanding of both data warehouses. Create a free account and get hands-on experience with <a href="https://aws.amazon.com/free/?all-free-tier.sort-by=item.additionalFields.SortRank&amp;all-free-tier.sort-order=asc&amp;awsf.Free%20Tier%20Types=*all&amp;awsf.Free%20Tier%20Categories=*all">AWS</a> and <a href="https://cloud.google.com/free/?utm_source=google&amp;utm_medium=cpc&amp;utm_campaign=latam-MX-all-es-dr-BKWS-all-all-trial-p-dr-1009897-LUAC0014409&amp;utm_content=text-ad-none-any-DEV_c-CRE_534950712439-ADGP_Hybrid%20%7C%20BKWS%20-%20PHR%20%7C%20Txt%20~%20GCP_Trial-KWID_43700065192374658-kwd-1390192877982&amp;utm_term=KW_gcp%20free%20trial-ST_GCP%20Free%20Trial&amp;gclid=Cj0KCQjwqKuKBhCxARIsACf4XuHHh4QUQEcR4HiAYNlrMtvtFf_BE28KKiLcNdgWDvIJbZ0eOwaEeD4aAjQ9EALw_wcB&amp;gclsrc=aw.ds">GCP</a> free tier.</p>
+</p>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+
+
+
+
+</div>
+
+ 
+        
+      </footer>
+
+      
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+    <aside class="book-toc">
+      
+  <nav id="TableOfContents">
+  <ul>
+    <li><a href="#why-is-columnar-data-storage-important-for-data-warehouses"><strong>Why Is Columnar Data Storage Important for Data Warehouses?</strong></a></li>
+    <li><a href="#using-redshift-or-bigquery-does-it-matter"><strong>Using Redshift or BigQuery, Does It Matter?</strong></a>
+      <ul>
+        <li><a href="#how-does-redshift-architecture-differ-from-that-of-bigquery"><strong>How Does Redshift Architecture Differ From That of BigQuery?</strong></a></li>
+        <li><a href="#is-redshift-more-expensive-than-bigquery"><strong>Is Redshift More Expensive Than BigQuery?</strong></a></li>
+      </ul>
+    </li>
+    <li><a href="#so-which-data-warehouse-is-better-to-use"><strong>So, Which Data Warehouse Is Better To Use?</strong></a></li>
+  </ul>
+</nav>
+
+ 
+    </aside>
+    
+  </main>
+
+  
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en" dir=>
+
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Architecture Guide Betelgeuse Last updated: 23/11/2020
+ Purpose The purpose of this guide is to describe the software architecture of the Betelgeuse application and its interaction with third-party applications.
+Audience This document is useful to the developers and stakeholders of Orion who are implementing or updating new features for the Betelgeuse application.
+ Introduction Betelgeuse is a serverless application hosted in the AWS cloud. Unlike the monolithic architecture of the previous Betelgeuse system, Betelgeuse is implemented as a containerized .">
+<meta name="theme-color" content="#FFFFFF"><meta property="og:title" content="Architecture Guide" />
+<meta property="og:description" content="" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://sblaizerwize.github.io/docs/architecture/" />
+
+<title>Architecture Guide | Salomon Marquez</title>
+<link rel="manifest" href="/manifest.json">
+<link rel="icon" href="/favicon.png" type="image/x-icon">
+<link rel="stylesheet" href="/book.min.8005b622238f1cff391feb991d3f8254c6e4e5acb4834c7c6dbf6e211d19551b.css" integrity="sha256-gAW2IiOPHP85H&#43;uZHT&#43;CVMbk5ay0g0x8bb9uIR0ZVRs=">
+<script defer src="/en.search.min.f63563102a6e4958f8531e5d06d632fdfa6371919667c73b700023e11ccc7e4c.js" integrity="sha256-9jVjECpuSVj4Ux5dBtYy/fpjcZGWZ8c7cAAj4RzMfkw="></script>
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-215534783-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<link rel="alternate" type="application/rss+xml" href="https://sblaizerwize.github.io/docs/architecture/index.xml" title="Salomon Marquez" />
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+  
+</head>
+
+<body dir=>
+  <input type="checkbox" class="hidden" id="menu-control" />
+  <main class="container flex">
+    <aside class="book-menu">
+      
+  <nav>
+<h2 class="book-brand">
+  <a href="/"><img src="/logo.png" alt="Logo" /><span>Salomon Marquez</span>
+  </a>
+</h2>
+
+
+<div class="book-search">
+  <input type="text" id="book-search-input" placeholder="Search" aria-label="Search" maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+  <hr>
+<p><strong>DOCUMENTATION SAMPLES</strong></p>
+<ul>
+<li><a href="/posts/">Portfolio</a></li>
+</ul>
+<hr>
+<p><strong>ABOUT ME</strong></p>
+<ul>
+<li><a href="/#skills">Skills</a></li>
+<li><a href="/#projects">Projects</a></li>
+<li><a href="/#open-source">Open Source</a></li>
+<li><a href="/#presentations">Presentations</a></li>
+<li><a href="/#leadership-initiatives-at-wizeline">Leadership Initiatives</a></li>
+<li><a href="/#certifications">Certifications</a></li>
+<li><a href="/#education">Education</a>
+<!-- raw HTML omitted --></li>
+</ul>
+<hr>
+<p><strong>CONTACT</strong></p>
+<ul>
+<li><a href="mailto:phd.smarquez@gmail.com">phd.smarquez@gmail.com</a>
+<!-- raw HTML omitted --></li>
+</ul>
+<hr>
+<p><strong>LINKS</strong></p>
+<ul>
+<li><a href="/resume/CV_SALOMON_MARQUEZ.pdf">My CV</a></li>
+<li><a href="https://www.linkedin.com/in/sblaizer/">My LinkedIn</a></li>
+<li><a href="https://github.com/sblaizerwize?tab=repositories">My GitHub</a></li>
+<li><a href="https://scholar.google.com.mx/citations?hl=en&amp;user=A91CjSIAAAAJ&amp;view_op=list_works&amp;sortby=pubdate">My Scholar</a></li>
+</ul>
+<hr>
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var menu=document.querySelector("aside.book-menu nav");addEventListener("beforeunload",function(event){localStorage.setItem("menu.scrollTop",menu.scrollTop);});menu.scrollTop=localStorage.getItem("menu.scrollTop");})();</script>
+
+
+ 
+    </aside>
+
+    <div class="book-page">
+      <header class="book-header">
+        
+  <head>
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-215534783-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-215534783-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+</head>
+<div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <strong>Architecture Guide</strong>
+
+  <label for="toc-control">
+    
+    <img src="/svg/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+    <input type="checkbox" class="hidden" id="toc-control" />
+    <aside class="hidden clearfix">
+      
+  <nav id="TableOfContents">
+  <ul>
+    <li><a href="#purpose">Purpose</a></li>
+    <li><a href="#audience">Audience</a></li>
+    <li><a href="#introduction">Introduction</a></li>
+    <li><a href="#betelgeuse-identity-and-authorization-module">Betelgeuse Identity and Authorization Module</a></li>
+    <li><a href="#betelgeuse-frontend">Betelgeuse Frontend</a></li>
+    <li><a href="#betelgeuse-backend">Betelgeuse Backend</a>
+      <ul>
+        <li><a href="#containerized-based-microservices">Containerized-Based Microservices</a></li>
+        <li><a href="#traffic-distribution">Traffic Distribution</a></li>
+      </ul>
+    </li>
+    <li><a href="#asynchronous-communication">Asynchronous Communication</a></li>
+    <li><a href="#deployment">Deployment</a></li>
+    <li><a href="#betelgeuse-security">Betelgeuse Security</a>
+      <ul>
+        <li><a href="#general-security-checkpoints">General Security Checkpoints</a></li>
+        <li><a href="#architectural-level-security-checkpoints">Architectural-Level Security Checkpoints</a></li>
+      </ul>
+    </li>
+    <li><a href="#betelgeuse-monitoring">Betelgeuse Monitoring</a></li>
+  </ul>
+</nav>
+
+
+    </aside>
+  
+ 
+      </header>
+
+      
+      
+  <article class="markdown"><h1 id="architecture-guide-betelgeuse"><strong>Architecture Guide Betelgeuse</strong></h1>
+<p>Last updated: 23/11/2020</p>
+<hr>
+<h2 id="purpose">Purpose</h2>
+<p>The purpose of this guide is to describe the software architecture of the Betelgeuse application and its interaction with third-party applications.</p>
+<h2 id="audience">Audience</h2>
+<p>This document is useful to the developers and stakeholders of Orion who are implementing or updating new features for the Betelgeuse application.</p>
+<hr>
+<h2 id="introduction">Introduction</h2>
+<p>Betelgeuse is a serverless application hosted in the AWS cloud. Unlike the monolithic architecture of the previous Betelgeuse system, Betelgeuse is implemented as a <a href="https://docs.microsoft.com/en-us/dotnet/architecture/microservices/">containerized .NET application</a> following a microservice-based architectural style. This style decomposes the monolithic approach into three main components, each associated with a microservice: bellatrix, rigel, and saiph.  Each microservice undertakes a single business responsibility from the old Betelgeuse system as follows:</p>
+<ul>
+<li><strong>Bellatrix Microservice</strong>: Handles transactions of individuals such as create/update clients and group leaders. It also manages brands, regions, routes, and groups.</li>
+<li><strong>Rigel Microservice</strong>: Handles transactions related to credits and payments.</li>
+<li><strong>Saiph Microservice</strong>: Handles the communication of Betelgeuse with third-party systems and processes transaction reports.</li>
+</ul>
+<p>Although microservices run independently and, therefore, are built separately, they continuously interact among themselves. The microservices are built as container images orchestrated by the <a href="https://aws.amazon.com/ecs/">AWS Elastic Container Service</a> (ECS). <a href="https://aws.amazon.com/fargate/">AWS Fargate</a> provisions the infrastructure of the ECS clusters. Each microservice has its own database decoupled from the other microservices. Data is migrated from the previous Betelgeuse system and stored in serverless <a href="https://aws.amazon.com/rds/aurora/mysql-features/">Aurora MySQL</a> relational databases. Moreover, communication among the microservices is asynchronous and based on integration events. It follows the principles of <a href="https://aws.amazon.com/blogs/compute/implementing-enterprise-integration-patterns-with-aws-messaging-services-publish-subscribe-channels/">request-response messaging for publish-subscribe channels</a>, using both <a href="https://aws.amazon.com/sns/?whats-new-cards.sort-by=item.additionalFields.postDateTime&amp;whats-new-cards.sort-order=desc">Amazon SNS</a> topics and <a href="https://aws.amazon.com/sqs/">Amazon SQS</a> queues.</p>
+<p>Betelgeuse is deployed on the cloud using the <a href="https://octopus.com/docs/getting-started">Octopus Deploy</a> tools. GitLab CI/CD tools ensure continuous integration and continuous delivery of the application by implementing automated pipelines. In addition, Betelgeuse uses <a href="https://www.terraform.io/">Terraform</a> templates to implement Infrastructure as Code on AWS.</p>
+<p>Finally, the Betelgeuse client application is stored in a bucket of <a href="https://aws.amazon.com/s3/">Amazon S3</a> and served as a Single Page Application (SPA) using <a href="https://aws.amazon.com/cloudfront/">AWS Cloudfront</a>. The components of the client application are built using the <a href="https://angular.io/docs">Angular Framework</a>.</p>
+<p>The Betelgeuse application comprises the following modules:</p>
+<ul>
+<li>Betelgeuse Identity and Authorization Module</li>
+<li>Betelgeuse Web Frontend</li>
+<li>Betelgeuse Backend</li>
+<li>Betelgeuse Security</li>
+<li>Betelgeuse Monitoring</li>
+</ul>
+<p><strong>Figure 1</strong> provides a high-level description of the Betelgeuse application.</p>
+<p><img src="
+
+https://sblaizerwize.github.io/architecture/architecture-highlevel.png" alt="Arquitectura" />
+<em><strong>Figure 1. Betelgeuse Architecture</strong></em><br>
+ </p>
+<p>The architectural style of Betelgeuse follows the good practices of <a href="https://docs.microsoft.com/en-us/dotnet/architecture/modern-web-apps-azure/common-web-application-architectures">Clean Architecture</a>. This style is suitable for complex business logics that involve several areas. The advantages of the Betelgeuse architecture are the following:</p>
+<ul>
+<li><strong>It follows the Dependency Inversion Principle (DIP).</strong> This principle states that high-level modules should not depend on low-level modules. The interplay between both modules must be thorugh abstractions. Therefore, high-level modules of the Betelgeuse such as data, infrastructure, dependencies, and user interface are decoupled from low-level modules (business rules). This principle focuses the Betelgeuse architecture on the business logic of Orion.</li>
+<li><strong>It complies with a Domain Driven Design (DDD)</strong>. DDD is a software development approach that links the implementation of the application to the core business concepts of the client. This approach enables to map the old monolithic architecture of Betelgeuse consisting of use cases into domains. Each domain then correlates to a microservice in the new model of Betelgeuse.</li>
+<li><strong>It is scalable</strong>. Microservices can scale up as Orion business logic does. Each microservice can assume a single business responsibility.</li>
+</ul>
+<hr>
+<h2 id="betelgeuse-identity-and-authorization-module">Betelgeuse Identity and Authorization Module</h2>
+<p>This section describes the business logic of Betelgeuse for an end user to access and navigate the application according to their role in Orion.</p>
+<p><a href="https://aws.amazon.com/cognito/">Amazon Cognito</a> is the AWS service that enables authentication and authorization of Betelgeuse end users. Cognito <a href="https://docs.aws.amazon.com/cognito/latest/developerguide/getting-started-with-cognito-user-pools.html">user pools</a> verify the identity of users so that they can directly sign in and sign up to the application. A user pool enables Betelgeuse to create and maintain an end-user directory that includes information such as profile, company, zone, and office.</p>
+<p>Betelgeuse, includes two methods to authenticate an end user:</p>
+<ul>
+<li>Directly registering the new user’s profile in the AWS Cognito console.</li>
+<li>Using a third-party SAML 2.0 identity provider, such as Azure Active Directory, for integrating Office 365 single sign-on (SSO), as <strong>Figure 2</strong> shows.</li>
+</ul>
+<p><img src="
+
+https://sblaizerwize.github.io/architecture/identity.png" alt="Identity" />
+<em><strong>Figure 2. Authentication Flow of Betelgeuse Users using Office 365</strong></em><br>
+ </p>
+<p>The user authentication flow using a third-party identity provider is the following:</p>
+<ol>
+<li>The user enters the domain of the Betelgeuse application.</li>
+<li>The application redirects the user to the Amazon Cognito hosted UI to authenticate using Office 365 SSO.</li>
+<li>Amazon Cognito redirects the user to the Microsoft login site to enter their Office 365 credentials.</li>
+<li>If the user authenticates successfully, Azure Active Directory provides four claims related to the user profile: role, office, zone, and company to Amazon Cognito using the SAML 2.0 standard, an industry standard for federated authentication.</li>
+</ol>
+<blockquote class="book-hint info">
+  <strong>Note:</strong><br>
+Originally, Orion’s user information was kept on a local Windows server. Eventually, the user directory was uploaded to the Azure Active Directory in the cloud using the Azure AD connect service.
+</blockquote>
+
+<ol start="5">
+<li>Next, Cognito issues a JSON Web Token (JWT) to the Betelgeuse application using the <a href="https://aws.amazon.com/blogs/mobile/understanding-amazon-cognito-user-pool-oauth-2-0-grants/">OAuth 2.0 implicit grant flow</a>, which enables Cognito to directly return a JWT to Betelgeuse after the user successfully authenticates. The OAuth 2.0 standard is used to control user authorization.</li>
+<li>The <a href="https://aws.amazon.com/amplify/">Amplify framework</a> decodes and verifies the JWT. If valid, it grants the user access to the application.</li>
+</ol>
+<blockquote class="book-hint danger">
+  <strong>Important:</strong><br>
+The Betelgeuse application uses the SDKs and libraries provided by the AWS Amplify framework to integrate AWS services. Amplify also handles the Betelgeuse sign in and sign up flow by implementing direct calls to the methods of the <a href="https://docs.amplify.aws/lib/auth/getting-started/q/platform/js">Auth class</a> using the SDK of Angular CLI.
+</blockquote>
+
+<hr>
+<h2 id="betelgeuse-frontend">Betelgeuse Frontend</h2>
+<p>This section describes the elements, along with their properties and relationships, that support the client and static content of Betelgeuse. An end user interacts with these elements after successfully identifying and accessing the application.</p>
+<p>The Betelgeuse application uses the <a href="https://angular.io/">Angular JavaScript framework</a> to build a Single-Page web Application (SPA). Amazon CloudFront serves the client and static content of the application, stored in an S3 Bucket. Betelgeuse Frontend communicates to the backend microservices rigel, bellatrix, and saiph using a REST API Interface.</p>
+<p>A CloudFront distribution is a reliable and secure way to serve content more efficiently because it enables Betelgeuse to cache the most frequently requested content. Each CloudFront distribution uses an<a href="https://aws.amazon.com/certificate-manager/#:~:text=AWS%20Certificate%20Manager%20%28ACM%29%20Private,lifecycle%20of%20your%20private%20certificates."> SSL certificate</a> to identify the Betelgeuse site and secure its private network communications. Moreover, each deployment environment: development, laboratory, testing, and production has its own CloudFront distribution.</p>
+<p>Frontend DNS (Domain Name System) requests are routed to the CloudFront distribution using the Amazon Route 53 service by means of an alternate DNS domain. The CloudFront distribution points to the origin S3 Bucket that hosts the client application. The S3 Bucket is configured for website hosting with policies to grant external access. For more details, check the section <a href="#cloudfront"><strong>Routing Traffic to CloudFront Distributions</strong></a>.</p>
+<hr>
+<h2 id="betelgeuse-backend">Betelgeuse Backend</h2>
+<p>This section describes the following topics:</p>
+<ul>
+<li>The architecture of the microservices as containerized images along with their infrastructure provisioning</li>
+<li>The routing of incoming traffic from the Frontend</li>
+<li>The structure of the Virtual Private Cloud (VPC) and subnets</li>
+<li>The request-response messaging among microservices</li>
+<li>The deployment of the Betelgeuse application</li>
+</ul>
+<hr>
+<h3 id="containerized-based-microservices">Containerized-Based Microservices</h3>
+<p>Betelgeuse uses a microservice-based architecture. Each microservice is a containerized application that has its own database. Betelgeuse includes three main microservices: bellatrix, rigel, and saiph. These microservices exist in all the deployment environments of the application: development, laboratory, testing, and production.</p>
+<p><img src="
+
+https://sblaizerwize.github.io/architecture/aws-ecs-fargate.png" alt="AWS-ECS-FARGATE" /></p>
+<p><em><strong>Figure 3. Interplay between the ECS Cluster and AWS Fargate for Building the Microservices.</strong></em><br>
+ </p>
+<p>As <strong>Figure 3</strong> shows, each deployment environment is built on an <a href="https://aws.amazon.com/ecs/">AWS ECS</a> (Elastic Container Service) cluster and launched using <a href="https://aws.amazon.com/fargate/">AWS Fargate</a>. Amazon ECS is an orchestration service that handles your containers using services. Services define tasks based on a <a href="https://docs.aws.amazon.com/AmazonECS/latest/userguide/task_definitions.html">task definition</a>, which works as a blueprint that describes how to provision your containers. Tasks are one-time executions of your containers. For example, the development environment includes an ECS cluster with three ECS services:</p>
+<ul>
+<li>orion-dev-bellatrix</li>
+<li>orion-dev-rigel</li>
+<li>orion-dev-saiph</li>
+</ul>
+<p>Each service can contain a single or multiple tasks representing a container image of a specific microservice. You can scale up to any number of tasks for maintaining your application’s availability if a task failure occurs.</p>
+<p>As mentioned above, the ECS service builds a container image of a microservice using a task definition. A task definition is required to run Docker images in ECS. The task definition defines some parameters such as the origin Docker image, CPU, and memory for each task, launch type, and ports. Betelgeuse uses <a href="https://aws.amazon.com/ecr/">AWS ECR</a> (Elastic Container Registry) to store the Docker images implemented and built in GitLab by the developers. The ECS service consumes the Docker images from the AWS ECR and builds the container image of the microservices using the task definition. For more details, consult the <a href="#deployment"><strong>Deployment section</strong></a>. To ensure compatibility and usage of the latest image version, GitLab uses semantic versioning (<a href="https://semver.org/">semver</a>) of images.</p>
+<p><a href="https://aws.amazon.com/fargate/">AWS Fargate</a> enables you to run your containers without requiring the whole capacity of EC2 instances. Fargate handles the infrastructure required for each ECS cluster. <a href="https://docs.aws.amazon.com/AmazonECS/latest/developerguide/launch_types.html">Fargate launch type</a> provisions your tasks with the required number of CPU cores and gigabytes of memory defined in the task definition.</p>
+<hr>
+<h3 id="traffic-distribution">Traffic Distribution</h3>
+<p>Betelgeuse’s domain name is <strong>orion.com.mx</strong>. This domain includes the following subdomains:</p>
+<ul>
+<li>dev.orion.com.mx</li>
+<li>lab.orion.com.mx</li>
+<li>test.orion.com.mx</li>
+<li>api-dev.orion.com.mx</li>
+<li>api-lab.orion.com.mx</li>
+<li>api-test.orion.com.mx</li>
+</ul>
+<p><a href="https://aws.amazon.com/route53/">Amazon Route 53</a> is responsible for routing traffic to <strong>orion.com.mx</strong> and its corresponding subdomains by means of a public hosted zone. A hosted zone contains records that define how the internet traffic is routed for Betelgeuse DNS queries. Amazon Route 53 handles DNS queries and routes traffic to a specific destination of the Betelgeuse application.</p>
+<p>The Amazon Route 53 service main responsibilities include:</p>
+<ul>
+<li>Mapping domain names to CloudFront distributions, Application Load Balancers and S3 Buckets.</li>
+<li>Routing traffic for a domain and its subdomains using records.</li>
+<li>Determining how to respond to DNS queries using a routing policy.</li>
+<li>Determining the format of the value that returns in response to a DNS query.</li>
+</ul>
+<p>The following sections describe in detail how Amazon Route 53 maps domain names to CloudFront distributions and Application Load Balancers.</p>
+<hr>
+<h4 id="cloudfront">Routing Traffic to CloudFront Distributions</h4>
+<p>To describe how Amazon Route 53 distributes traffic to a CloudFront distribution, the following steps use the dev.orion.com.mx subdomain as an example.</p>
+<ol>
+<li>The frontend sends a <strong>dev.orion.com.mx</strong> DNS query.</li>
+<li>The Amazon Route 53 service routes traffic for this subdomain to the alternate domain name CNAME associated with the CloudFront distribution.</li>
+</ol>
+<blockquote class="book-hint info">
+  <strong>Note:</strong><br>
+The DNS query name must exactly match the CloudFront alternate domain name. For example, if the alias record name is dev.orion.com.mx the alternate domain of the CloudFront distribution must be named likewise.
+</blockquote>
+
+<ol start="3">
+<li>The CloudFront distribution points to the S3 bucket endpoint and serves the client and static content stored in the bucket.</li>
+</ol>
+<blockquote class="book-hint info">
+  <strong>Note:</strong><br>
+The CloudFront distribution uses an SSL certificate to secure all communications among the AWS resources of the internal network. An SSL certificate is created per domain name using the <a href="https://console.aws.amazon.com/ec2/home?region=us-east-1#SecurityGroups:">Amazon ACM service</a>.
+</blockquote>
+
+<hr>
+<h4 id="routing-traffic-to-application-load-balancers">Routing Traffic to Application Load Balancers</h4>
+<p>Betelgeuse microservices are placed behind an HTTP/HTTPS load balancer secured by an SSL certificate. The load balancer routes traffic to the microservices based upon inbound rules defined on specific ports. Furthermore, the application load balancers have a security group, which acts as a virtual firewall to control inbound and outbound traffic.</p>
+<p>To describe how Amazon Route 53 distributes traffic to an application load balancer, the following steps use the <strong>api-lab.orion.com.mx</strong> subdomain as an example.</p>
+<ol>
+<li>The frontend sends a <strong>api-lab.orion.com.mx/bellatrix</strong> DNS query.</li>
+<li>Amazon Route 53 routes all incoming traffic from this DNS name to the application load balancer (ALB) of the laboratory environment.</li>
+<li>The ALB redirects traffic to a microservice target group based on the route name (<strong>/bellatrix/</strong>, <strong>/rigel/</strong>, or <strong>/saiph/</strong>).</li>
+</ol>
+<blockquote class="book-hint danger">
+  <strong>Important:</strong><br>
+The ALB is configured to listen to ports: 80, 443, 8080, 8443, 8810, and 8811. ALB listeners check for connection requests that use the HTTP or HTTPs protocols on these ports. Each listener includes rules to route incoming traffic to a specific target group.
+</blockquote>
+
+<ol start="4">
+<li>The target group contains a target of type IP. In this case, the target is the private IP address assigned to the task of the bellatrix microservice. This IP address is dynamic and changes every time the task or the service is restored.</li>
+</ol>
+<blockquote class="book-hint info">
+  <strong>Note:</strong><br>
+All incoming traffic from ports that use the HTTP protocol is redirected to ports using the HTTPs protocol. This configuration ensures that all incoming requests have an SSL certificate to secure the connection.
+</blockquote>
+
+<p>For security purposes, each deployment environment has its own Virtual Private Network (VPC) that complies with the network architecture of Orion. A VPC contains three availability zones. Each availability zone includes a private and an isolated subnet for a total of six subnets. Private subnets host container images of the microservices. On the other hand, isolated subnets host databases. Besides, the ALB has an associated SSL certificate to secure communications and encrypt sent data. The Betelgeuse application has an additional security layer, the user must connect to Orion’s VPN to access the microservices resources.</p>
+<blockquote class="book-hint info">
+  <strong>Note:</strong><br>
+Only the development environment has both the microservice ECS tasks and databases configured on private subnets. Isolated subnets are not used.
+</blockquote>
+
+<hr>
+<h2 id="asynchronous-communication">Asynchronous Communication</h2>
+<p>Communication among the microservices that integrate the Betelgeuse application is based on events using both <a href="https://aws.amazon.com/sns/?whats-new-cards.sort-by=item.additionalFields.postDateTime&amp;whats-new-cards.sort-order=desc">Amazon Simple Notification Service (SNS)</a> topics and <a href="https://aws.amazon.com/sqs/">Amazon Simple Queue (SQS)</a> service. This strategy ensures a decoupled and asynchronous interaction among the different microservices that follows the principle of request-response messaging for publish-subscribe channels. In this scheme, an event bus collects all the events produced by a microservice. Then, it distributes them among the subscribed queues of other microservices, as <strong>Figure 4</strong> shows.</p>
+<p>As an example, the following steps describe in detail the communication scheme of the bellatrix microservice with the rigel and saiph microservices.</p>
+<ol>
+<li>The bellatrix microservice produces a new event.</li>
+<li>The Amazon SNS service, that listens to events from the list of topics of all the microservices, performs two actions:
+<ul>
+<li>It fans this event out to the list of registered topics of the rigel and saiph microservices.</li>
+<li>It processes all event logs parallelly and stores them in an S3 bucket for further reference and inspection. To accomplish that,
+<ol>
+<li>A Lambda function pushes the events to <a href="https://aws.amazon.com/kinesis/data-firehose/?kinesis-blogs.sort-by=item.additionalFields.createdDate&amp;kinesis-blogs.sort-order=desc">Amazon Kinesis Data Firehose</a>.</li>
+<li>The Kinesis Data Firehose service captures and delivers the streaming data (events) into an S3 bucket.<br>
+If required, a second Lambda function can perform an identity transformation of the events in the stream.</li>
+</ol>
+</li>
+</ul>
+</li>
+<li>The Amazon SQS service subscribed to the topic collects the new event.</li>
+<li>The Amazon SQS service appends the event to the queue of the rigel and saiph microservices, respectively.</li>
+<li>The rigel and saiph microservices process the event.
+Parallelly, the event is collected by a <a href="https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-dead-letter-queues.html">Death Letter Queue</a> (DLQ) to ensure that the event is processed. A DLQ can handle duplicated events. If required, all DLQ logs can be processed by a Lambda function and stored in an S3 bucket.</li>
+</ol>
+<p><img src="
+
+https://sblaizerwize.github.io/architecture/communication.png" alt="COMMUNICATION" />
+<em><strong>Figure 4. Asynchronous and Decoupled Communication among Betelgeuse Microservices.</strong></em><br>
+ </p>
+<hr>
+<h2 id="deployment">Deployment</h2>
+<p>Betelgeuse uses the Octopus tools for deploying the containerized images of the microservices in the cloud. Each deployment environment (development, testing, laboratory, and production) includes five containerized images. Octopus executes a PowerShell script that tells the AWS CLI which processes and resources to implement, as well as which specific version of the images stored in the AWS ECR to use. <strong>Figure 5</strong> describes the deployment process of the Betelgeuse application.</p>
+<p><img src="
+
+https://sblaizerwize.github.io/architecture/deployment-octopus.png" alt="DEPLOYMENT" />
+<em><strong>Figure 5. Deployment Process of Betelgeuse Environments using Octopus</strong></em><br>
+ </p>
+<p>To understand the deployment process of containerized images, the following steps describe how Octopus deploys the bellatrix image into the development environment.</p>
+<ol>
+<li>A developer makes a pull request to the <strong>Orion.Betelgeuse.Bellatrix</strong> repository.</li>
+<li>GitLab CI/CD implements automatically the following stages:
+<ul>
+<li><strong>Prebuild</strong>
+<ul>
+<li>Determines image version using semantic versioning specification v.1.0.0 (<a href="https://semver.org/">SemVer</a>).</li>
+</ul>
+</li>
+<li><strong>Build and Test</strong>
+<ul>
+<li>Executes unit tests to the .NET project and all its dependencies.</li>
+<li>Builds, analyzes static code, and publishes the .NET core application and its dependencies to a folder for deployment.</li>
+</ul>
+</li>
+<li><strong>Push</strong>
+<ul>
+<li>Builds, tags, and pushes a dockerized image of the .NET core application to the container registry of GitLab (CI_REGISTRY_IMAGE).</li>
+<li>Builds, tags, and pushes a dockerized image of the .NET core application to the AWS Elastic Container Registry (ECR).</li>
+<li>Packs the powershell deployment script into a NuGet package and pushes it to the Octopus built-in repository.</li>
+</ul>
+</li>
+<li><strong>Deploy</strong>
+<ul>
+<li>Creates a release with the specified version in the <strong>Prebuild</strong> step and deploys it to the development environment.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Octopus runs the PowerShell script, which contains custom deployment actions to be performed by the AWS CLI.<br>
+Octopus tells AWS ECR to deploy the bellatrix image that matches the specified version number of the created release.</li>
+</ol>
+<blockquote class="book-hint danger">
+  <strong>Important:</strong><br>
+Octopus enables custom powershell scripts to have access to the AWS CLI. This requires a previous authentication step to provide AWS credentials to Octopus.
+</blockquote>
+
+<hr>
+<h2 id="betelgeuse-security">Betelgeuse Security</h2>
+<p>The Betelgeuse application complies with the following security checkpoints:</p>
+<hr>
+<h3 id="general-security-checkpoints">General Security Checkpoints</h3>
+<ul>
+<li>Users must connect to the Orion VPN to access the application.</li>
+<li>Users must have Office 365 credentials or have a username and password provided by the IT department to enter the application.<br>
+The IT department can create, organize, and update users directly on the AWS console of Cognito based on a role and permission matrix.</li>
+<li>Users have restricted permissions to particular Betelgeuse functionalities based on their role and the permission matrix.</li>
+</ul>
+<blockquote class="book-hint info">
+  <strong>Note:</strong><br>
+The permission matrix applies to each endpoint of every microservice (bellatrix, rigel, and saiph) and to particular functionalities (windows) of the application’s frontend.
+</blockquote>
+
+<hr>
+<h3 id="architectural-level-security-checkpoints">Architectural-Level Security Checkpoints</h3>
+<ul>
+<li>S3 buckets that store the client application have configured access policies.</li>
+<li>Cloudfront distributions that serve the client application have a SSL certificate.</li>
+<li>Application Load Balancers that distribute frontend DNS queries to the microservices have a SSL certificate.</li>
+<li>Each deployment environment has its own VPC including three private and three isolated subnets. Private subnets host the microservices whereas isolated subnets host the databases.</li>
+<li>Developers can connect to the isolated Amazon Aurora RDS databases from their local machine using an Amazon EC2 instance as a <a href="https://aws.amazon.com/premiumsupport/knowledge-center/rds-connect-ec2-bastion-host/">bastion host</a>. This approach enables them to securely administer and give maintenance to the databases.</li>
+<li>Infrastructure as code of Betelgeuse uses Terraform templates. <a href="https://docs.aws.amazon.com/systems-manager/latest/userguide/systems-manager-parameter-store.html">AWS Systems Manager Parameter Store</a> manages secrets such as passwords, API keys, and other sensitive information (in a string format) that is consumed by the Terraform templates.</li>
+<li>All requests from the frontend to the backend using the REST API interface require a bearer token.</li>
+<li>All incoming traffic to the microservices is redirected by the Application Load Balancers to port 443 that uses the HTTPs protocol.</li>
+</ul>
+<hr>
+<h2 id="betelgeuse-monitoring">Betelgeuse Monitoring</h2>
+<p>The <a href="https://aws.amazon.com/cloudwatch/">AWS CloudWatch</a> service monitors the AWS infrastructure of Betelgeuse. This service enables you to select metrics to audit AWS resources such as EC2 instances, logs, SNS messages, SQS queues, CloudFront distributions, Application Load Balancers, and so on. Additionally, <strong>Grafana</strong> is integrated in the technological stack of Betelgeuse as an open source analytics and monitoring solution to check the AWS infrastructure.</p>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+
+
+
+
+</div>
+
+ 
+        
+      </footer>
+
+      
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+    <aside class="book-toc">
+      
+  <nav id="TableOfContents">
+  <ul>
+    <li><a href="#purpose">Purpose</a></li>
+    <li><a href="#audience">Audience</a></li>
+    <li><a href="#introduction">Introduction</a></li>
+    <li><a href="#betelgeuse-identity-and-authorization-module">Betelgeuse Identity and Authorization Module</a></li>
+    <li><a href="#betelgeuse-frontend">Betelgeuse Frontend</a></li>
+    <li><a href="#betelgeuse-backend">Betelgeuse Backend</a>
+      <ul>
+        <li><a href="#containerized-based-microservices">Containerized-Based Microservices</a></li>
+        <li><a href="#traffic-distribution">Traffic Distribution</a></li>
+      </ul>
+    </li>
+    <li><a href="#asynchronous-communication">Asynchronous Communication</a></li>
+    <li><a href="#deployment">Deployment</a></li>
+    <li><a href="#betelgeuse-security">Betelgeuse Security</a>
+      <ul>
+        <li><a href="#general-security-checkpoints">General Security Checkpoints</a></li>
+        <li><a href="#architectural-level-security-checkpoints">Architectural-Level Security Checkpoints</a></li>
+      </ul>
+    </li>
+    <li><a href="#betelgeuse-monitoring">Betelgeuse Monitoring</a></li>
+  </ul>
+</nav>
+
+ 
+    </aside>
+    
+  </main>
+
+  
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

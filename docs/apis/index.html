@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="en" dir=>
+
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="BlueSnap Implementation Last updated: 23/01/2020
+ Purpose This document explains the implementation of BlueSnap payment processor with SampleClient web services. It describes the payment logic, provides use cases, and shows the payment sequence diagrams for each case.
+Audience The target audience of this document includes stakeholders, developers, and project managers from SampleClient and MyEnterprise.
+ Overview SampleClient requires to integrate BlueSnap as an alternative payment processor for its web services. SampleClient payment processors include:">
+<meta name="theme-color" content="#FFFFFF"><meta property="og:title" content="API documentation" />
+<meta property="og:description" content="" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://sblaizerwize.github.io/docs/apis/" />
+
+<title>API documentation | Salomon Marquez</title>
+<link rel="manifest" href="/manifest.json">
+<link rel="icon" href="/favicon.png" type="image/x-icon">
+<link rel="stylesheet" href="/book.min.8005b622238f1cff391feb991d3f8254c6e4e5acb4834c7c6dbf6e211d19551b.css" integrity="sha256-gAW2IiOPHP85H&#43;uZHT&#43;CVMbk5ay0g0x8bb9uIR0ZVRs=">
+<script defer src="/en.search.min.f63563102a6e4958f8531e5d06d632fdfa6371919667c73b700023e11ccc7e4c.js" integrity="sha256-9jVjECpuSVj4Ux5dBtYy/fpjcZGWZ8c7cAAj4RzMfkw="></script>
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-215534783-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<link rel="alternate" type="application/rss+xml" href="https://sblaizerwize.github.io/docs/apis/index.xml" title="Salomon Marquez" />
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+  
+</head>
+
+<body dir=>
+  <input type="checkbox" class="hidden" id="menu-control" />
+  <main class="container flex">
+    <aside class="book-menu">
+      
+  <nav>
+<h2 class="book-brand">
+  <a href="/"><img src="/logo.png" alt="Logo" /><span>Salomon Marquez</span>
+  </a>
+</h2>
+
+
+<div class="book-search">
+  <input type="text" id="book-search-input" placeholder="Search" aria-label="Search" maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+  <hr>
+<p><strong>DOCUMENTATION SAMPLES</strong></p>
+<ul>
+<li><a href="/posts/">Portfolio</a></li>
+</ul>
+<hr>
+<p><strong>ABOUT ME</strong></p>
+<ul>
+<li><a href="/#skills">Skills</a></li>
+<li><a href="/#projects">Projects</a></li>
+<li><a href="/#open-source">Open Source</a></li>
+<li><a href="/#presentations">Presentations</a></li>
+<li><a href="/#leadership-initiatives-at-wizeline">Leadership Initiatives</a></li>
+<li><a href="/#certifications">Certifications</a></li>
+<li><a href="/#education">Education</a>
+<!-- raw HTML omitted --></li>
+</ul>
+<hr>
+<p><strong>CONTACT</strong></p>
+<ul>
+<li><a href="mailto:phd.smarquez@gmail.com">phd.smarquez@gmail.com</a>
+<!-- raw HTML omitted --></li>
+</ul>
+<hr>
+<p><strong>LINKS</strong></p>
+<ul>
+<li><a href="/resume/CV_SALOMON_MARQUEZ.pdf">My CV</a></li>
+<li><a href="https://www.linkedin.com/in/sblaizer/">My LinkedIn</a></li>
+<li><a href="https://github.com/sblaizerwize?tab=repositories">My GitHub</a></li>
+<li><a href="https://scholar.google.com.mx/citations?hl=en&amp;user=A91CjSIAAAAJ&amp;view_op=list_works&amp;sortby=pubdate">My Scholar</a></li>
+</ul>
+<hr>
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var menu=document.querySelector("aside.book-menu nav");addEventListener("beforeunload",function(event){localStorage.setItem("menu.scrollTop",menu.scrollTop);});menu.scrollTop=localStorage.getItem("menu.scrollTop");})();</script>
+
+
+ 
+    </aside>
+
+    <div class="book-page">
+      <header class="book-header">
+        
+  <head>
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-215534783-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-215534783-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+</head>
+<div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <strong>API documentation</strong>
+
+  <label for="toc-control">
+    
+    <img src="/svg/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+    <input type="checkbox" class="hidden" id="toc-control" />
+    <aside class="hidden clearfix">
+      
+  <nav id="TableOfContents">
+  <ul>
+    <li><a href="#purpose">Purpose</a></li>
+    <li><a href="#audience">Audience</a></li>
+    <li><a href="#overview">Overview</a></li>
+    <li><a href="#a-new-vaulted-shopper-making-a-purchase">A New Vaulted Shopper Making a Purchase</a></li>
+    <li><a href="#sequence-diagram">Sequence Diagram</a></li>
+    <li><a href="#endpoints">Endpoints</a>
+      <ul>
+        <li><a href="#get-v2billingcreditcard"><strong>GET /v2/billing/creditcard</strong></a></li>
+        <li><a href="#post-payment-fields-tokens"><strong>POST /payment-fields-tokens</strong></a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+
+    </aside>
+  
+ 
+      </header>
+
+      
+      
+  <article class="markdown"><h1 id="bluesnap-implementation"><strong>BlueSnap Implementation</strong></h1>
+<p>Last updated: 23/01/2020</p>
+<hr>
+<h2 id="purpose">Purpose</h2>
+<p>This document explains the implementation of BlueSnap payment processor with SampleClient web services. It describes the payment logic, provides use cases, and shows the payment sequence diagrams for each case.</p>
+<h2 id="audience">Audience</h2>
+<p>The target audience of this document includes stakeholders, developers, and project managers from SampleClient and MyEnterprise.</p>
+<hr>
+<h2 id="overview">Overview</h2>
+<p>SampleClient requires to integrate <a href="https://home.bluesnap.com/">BlueSnap</a> as an alternative payment processor for its web services. SampleClient payment processors include:</p>
+<ul>
+<li><a href="https://stripe.com/en-mx">Stripe</a></li>
+<li><a href="https://hbms.com/">Humboldt</a></li>
+<li><a href="https://www.paysafe.com/en/">Paysafe</a></li>
+<li><a href="https://www.safecharge.com/">Safecharge</a></li>
+</ul>
+<p>The first stage of BlueSnap implementation with SampleClient enables payments using a credit card. This document describes the payment flow of a New Vaulted Shopper Making a Purchase.</p>
+<hr>
+<h2 id="a-new-vaulted-shopper-making-a-purchase">A New Vaulted Shopper Making a Purchase</h2>
+<p>The scenario for this purchase case is the following:</p>
+<ol>
+<li>A new shopper signs up for the first-time to the SampleClient web services.</li>
+<li>The shopper decides to buy credits to have access to SampleClient content using a credit card.</li>
+<li>The shopper selects the number of credits and proceeds to the <strong>checkout form</strong>.</li>
+<li>The SampleClient payment logic selects BlueSnap as payment processor from among several processors (Stripe, Humboldt, Paysafe, and Safecharge) to make a purchase with a credit card.</li>
+<li>The shopper fills up all required fields to complete the transaction.</li>
+<li>The payment processor asks permission to store the credit card information for future transactions.</li>
+<li>The shopper clicks the <strong>Buy securely now</strong> button.</li>
+<li>The shopper receives a notification status about the purchase transaction.</li>
+</ol>
+<hr>
+<h2 id="sequence-diagram">Sequence Diagram</h2>
+<p>The following diagram shows the payment logic for a shopper making a purchase using BlueSnap payment processor.</p>
+<p><img src="
+
+https://sblaizerwize.github.io/apis/sequence_diagram.png" alt="SequenceDiagram" />
+<em><strong>Figure 1. Payment Sequence Diagram for a Shopper Making a Purchase using BlueSnap Processor</strong></em><br>
+ </p>
+<p>The process of the payment sequence for a shopper making a purchase is the following:</p>
+<ol>
+<li>The frontend sends a GET request to the backend to load the BlueSnap payment form with the Hosted Payment Fields.</li>
+<li>The backend sends a POST request to the BlueSnap API to retrieve a Hosted Payment Fields token (<code>pfToken</code>).</li>
+<li>The BlueSnap API returns the <code>pfToken</code> on the Location header.</li>
+<li>The backend returns to the frontend the following parameters: <code>pfToken</code>, <code>base_url</code>, and <code>billing_workflow</code>.</li>
+<li>The frontend loads the <strong>checkout form</strong> with BlueSnap Hosted Payment Fields.</li>
+<li>The shopper clicks the <strong>Buy securely now</strong> button after filling out all of the fields.</li>
+<li>The frontend sends three PUT requests to the BlueSnap API to protect customer-sensitive data (CCN, Expiration date, and CVV).</li>
+<li>The frontend receives a confirmation of the binding between the <code>pfToken</code> and shopper’s card information.</li>
+<li>The frontend sends a POST request to backend to make a purchase using the <code>pfToken</code> and shopper’s payment details.</li>
+<li>The backend sends a POST request to BlueSnap API to vault a new shopper.</li>
+<li>The backend receives a BlueSnap Customer ID associated with the new vaulted shopper.</li>
+<li>The backend sends a POST request to BlueSnap API to make a purchase using the BlueSnap Customer ID.</li>
+<li>The backend receives a notification of the payment status.</li>
+<li>The backend sends back the notification of the payment status to the frontend.</li>
+<li>The frontend displays a window with the payment status.</li>
+</ol>
+<hr>
+<h2 id="endpoints">Endpoints</h2>
+<p>The following table lists the endpoints involved in the payment logic described above:</p>
+
+
+<table>
+  <tr>
+   <td><strong>From </strong>
+   </td>
+   <td><strong>To </strong>
+   </td>
+   <td><strong>Endpoint</strong>
+   </td>
+  </tr>
+  <tr>
+   <td>
+    <code>Frontend </code>
+   </td>
+   <td>
+    <code>Backend </code>
+   </td>
+   <td>
+    <code>GET /v2/billing/creditcard </code>
+   </td>
+  </tr>
+  <tr>
+   <td>
+    <code>Backend </code>
+   </td>
+   <td>
+    <code>BlueSnap API </code>
+   </td>
+   <td>
+    <code>POST /payment-fields-tokens </code>
+   </td>
+  </tr>
+  <tr>
+   <td>
+    <code>Frontend </code>
+   </td>
+   <td>
+    <code>BlueSnap API </code>
+   </td>
+   <td>
+    <code>PUT /payment-fields-tokens/ </code>
+   </td>
+  </tr>
+  <tr>
+   <td>
+    <code>Frontend </code>
+   </td>
+   <td>
+    <code>Backend </code>
+   </td>
+   <td>
+    <code>POST /v2/billing/creditcard </code>
+   </td>
+  </tr>
+  <tr>
+   <td>
+    <code>Backend </code>
+   </td>
+   <td>
+    <code>BlueSnap API </code>
+   </td>
+   <td>
+    <code>POST /vaulted-shoppers </code>
+   </td>
+  </tr>
+  <tr>
+   <td>
+    <code>Backend</code>
+   </td>
+   <td>
+    <code>BlueSnap API </code>
+   </td>
+   <td><code> POST /transactions</code>
+   </td>
+  </tr>
+</table>
+
+
+
+<h3 id="get-v2billingcreditcard"><strong>GET /v2/billing/creditcard</strong></h3>
+<p>This request enables the frontend to receive a transaction token and load the BlueSnap payment form.</p>
+<h4 id="url">URL</h4>
+<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">  http://api-dev.sampleclient.com/v2/billing/creditcard/<span style="color:#f00">?</span>is_mobile=<span style="color:#ff0;font-weight:bold">1</span> \
+</code></pre></div><h4 id="header-parameters">Header Parameters</h4>
+<p>The following table lists the header parameters used in the request.</p>
+
+
+<table>
+  <tr>
+   <td><strong>Parameter</strong>
+   </td>
+   <td><strong>Description</strong>
+   </td>
+   <td><strong>Type</strong>
+   </td>
+   <td><strong>Required / Optional</strong>
+   </td>
+  </tr>
+  <tr>
+   <td><strong><code>Authorization</code></strong>
+   </td>
+   <td>Specifies the bearer token for SampleClient API authentication. <strong>Value:</strong> Bearer [USER_TOKEN].
+   </td>
+   <td>string
+   </td>
+   <td>required
+   </td>
+  </tr>
+  <tr>
+   <td><strong><code>Content-Type</code></strong>
+   </td>
+   <td>Specifies the format of the content response. <strong>Value:</strong> application/x-www-form-urlencoded. 
+   </td>
+   <td>string
+   </td>
+   <td>required
+   </td>
+  </tr>
+  <tr>
+   <td><strong><code>cache-control</code></strong>
+   </td>
+   <td>Indicates whether there is a cache control. <strong>Value: </strong>cache and no-cache.
+   </td>
+   <td>string
+   </td>
+   <td>required
+   </td>
+  </tr>
+</table>
+
+
+
+<h4 id="query-parameters">Query Parameters</h4>
+<p>The following table lists the query parameters used in the request.</p>
+
+
+<table>
+  <tr>
+   <td><strong>Parameter</strong>
+   </td>
+   <td><strong>Description</strong>
+   </td>
+   <td><strong>Type</strong>
+   </td>
+   <td><strong>Required / Optional</strong>
+   </td>
+  </tr>
+  <tr>
+   <td><strong><code>is_mobile</code></strong>
+   </td>
+   <td>Specifies whether the shopper is using a mobile device. If true, <strong>value:</strong> 1.
+   </td>
+   <td>integer
+   </td>
+   <td>required
+   </td>
+  </tr>
+  <tr>
+   <td><strong><code>packages</code></strong>
+   </td>
+   <td>Specifies the number of credits the shopper is buying. <strong>Value:</strong> 5, 11, 22.
+   </td>
+   <td>integer
+   </td>
+   <td>required
+   </td>
+  </tr>
+</table>
+
+
+
+<h4 id="sample-request">Sample Request</h4>
+<p>The following is an example of a command-line request.</p>
+<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">curl -X GET \
+  <span style="color:#0ff;font-weight:bold">&#39;http://api-dev.sampleclient.com/v2/billing/creditcard/?is_mobile=1&amp;packages=11&#39;</span> \
+  -H <span style="color:#0ff;font-weight:bold">&#39;Authorization: Bearer [USER_TOKEN]&#39;</span> \
+  -H <span style="color:#0ff;font-weight:bold">&#39;Content-Type: application/x-www-form-urlencoded&#39;</span> \
+  -H <span style="color:#0ff;font-weight:bold">&#39;cache-control: no-cache&#39;</span> \
+</code></pre></div><h4 id="response-body">Response Body</h4>
+<p>The following table lists the elements commonly used from the response.</p>
+
+
+<table>
+  <tr>
+   <td colspan="2" ><strong>Element</strong>
+   </td>
+   <td><strong>Description</strong>
+   </td>
+   <td colspan="2" ><strong>Type</strong>
+   </td>
+  </tr>
+  <tr>
+   <td colspan="2" ><strong><code>bluesnap_pars</code></strong>
+   </td>
+   <td>Contains information on the transaction token. 
+   </td>
+   <td colspan="2" >data object
+   </td>
+  </tr>
+  <tr>
+   <td>
+   </td>
+   <td><strong><code>base_url</code></strong>
+   </td>
+   <td>Specifies the base API URLs for the BlueSnap environments. <strong>Values:</strong> sandbox and production.
+   </td>
+   <td colspan="2" >string
+   </td>
+  </tr>
+  <tr>
+   <td>
+   </td>
+   <td><strong><code>hostedFieldToken</code></strong>
+   </td>
+   <td>Specifies the generated transaction token. 
+   </td>
+   <td colspan="2" >long
+   </td>
+  </tr>
+  <tr>
+   <td colspan="2" ><strong><code>rebuy</code></strong>
+   </td>
+   <td>Contains information about the stored payment methods of a vaulted shopper. 
+   </td>
+   <td colspan="2" >array
+   </td>
+  </tr>
+</table>
+
+
+
+<blockquote class="book-hint danger">
+  <strong>Important:</strong><br>
+The elements listed in the response body table are in blue color in the Sample Response Body.
+</blockquote>
+
+<h4 id="sample-response-body">Sample Response Body</h4>
+<p>The following is an extract of a typical response showing some of the elements returned for this request.</p>
+<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">{
+  <span style="color:#0ff;font-weight:bold">&#34;creditcardform&#34;</span>: [
+    {
+      <span style="color:#0ff;font-weight:bold">&#34;type&#34;</span>: <span style="color:#0ff;font-weight:bold">&#34;select&#34;</span>,
+      <span style="color:#0ff;font-weight:bold">&#34;options&#34;</span>: [],
+      <span style="color:#0ff;font-weight:bold">&#34;multi&#34;</span>: <span style="color:#ff0;font-weight:bold">1</span>,
+      <span style="color:#0ff;font-weight:bold">&#34;name&#34;</span>: <span style="color:#0ff;font-weight:bold">&#34;packages&#34;</span>
+    },
+    {
+      <span style="color:#0ff;font-weight:bold">&#34;type&#34;</span>: <span style="color:#0ff;font-weight:bold">&#34;text&#34;</span>,
+      <span style="color:#0ff;font-weight:bold">&#34;label&#34;</span>: <span style="color:#0ff;font-weight:bold">&#34;Name on Credit Card&#34;</span>,
+      <span style="color:#0ff;font-weight:bold">&#34;name&#34;</span>: <span style="color:#0ff;font-weight:bold">&#34;cc_fullname&#34;</span>
+    },
+    {
+      <span style="color:#0ff;font-weight:bold">&#34;type&#34;</span>: <span style="color:#0ff;font-weight:bold">&#34;text&#34;</span>,
+      <span style="color:#0ff;font-weight:bold">&#34;label&#34;</span>: <span style="color:#0ff;font-weight:bold">&#34;Street Address&#34;</span>,
+      <span style="color:#0ff;font-weight:bold">&#34;name&#34;</span>: <span style="color:#0ff;font-weight:bold">&#34;street&#34;</span>
+    },
+    {
+      <span style="color:#0ff;font-weight:bold">&#34;type&#34;</span>: <span style="color:#0ff;font-weight:bold">&#34;text&#34;</span>,
+      <span style="color:#0ff;font-weight:bold">&#34;label&#34;</span>: <span style="color:#0ff;font-weight:bold">&#34;City&#34;</span>,
+      <span style="color:#0ff;font-weight:bold">&#34;value&#34;</span>: <span style="color:#0ff;font-weight:bold">&#34;Beverly Hills&#34;</span>,
+      <span style="color:#0ff;font-weight:bold">&#34;name&#34;</span>: <span style="color:#0ff;font-weight:bold">&#34;city&#34;</span>
+    },
+    {
+      <span style="color:#0ff;font-weight:bold">&#34;type&#34;</span>: <span style="color:#0ff;font-weight:bold">&#34;select&#34;</span>,
+      <span style="color:#0ff;font-weight:bold">&#34;label&#34;</span>: <span style="color:#0ff;font-weight:bold">&#34;Location &#34;</span>,
+      <span style="color:#0ff;font-weight:bold">&#34;value&#34;</span>: <span style="color:#0ff;font-weight:bold">&#34;225&#34;</span>,
+      <span style="color:#0ff;font-weight:bold">&#34;options&#34;</span>: [
+        {
+          <span style="color:#0ff;font-weight:bold">&#34;id&#34;</span>: -<span style="color:#ff0;font-weight:bold">1</span>,
+          <span style="color:#0ff;font-weight:bold">&#34;name&#34;</span>: <span style="color:#0ff;font-weight:bold">&#34;--------------&#34;</span>
+        },
+        {
+          <span style="color:#0ff;font-weight:bold">&#34;id&#34;</span>: <span style="color:#ff0;font-weight:bold">1</span>,
+          <span style="color:#0ff;font-weight:bold">&#34;name&#34;</span>: <span style="color:#0ff;font-weight:bold">&#34;AFGHANISTAN&#34;</span>
+        }, 
+        ...
+        {
+          <span style="color:#0ff;font-weight:bold">&#34;id&#34;</span>: <span style="color:#ff0;font-weight:bold">239</span>,
+          <span style="color:#0ff;font-weight:bold">&#34;name&#34;</span>: <span style="color:#0ff;font-weight:bold">&#34;ZIMBABWE&#34;</span>
+        }
+      ],
+      <span style="color:#0ff;font-weight:bold">&#34;name&#34;</span>: <span style="color:#0ff;font-weight:bold">&#34;country&#34;</span>
+    },
+    {
+      <span style="color:#0ff;font-weight:bold">&#34;type&#34;</span>: <span style="color:#0ff;font-weight:bold">&#34;text&#34;</span>,
+      <span style="color:#0ff;font-weight:bold">&#34;label&#34;</span>: <span style="color:#0ff;font-weight:bold">&#34;ZIP/Postal Code&#34;</span>,
+      <span style="color:#0ff;font-weight:bold">&#34;value&#34;</span>: <span style="color:#0ff;font-weight:bold">&#34;90210&#34;</span>,
+      <span style="color:#0ff;font-weight:bold">&#34;name&#34;</span>: <span style="color:#0ff;font-weight:bold">&#34;postal_code&#34;</span>
+    },
+    {
+      <span style="color:#0ff;font-weight:bold">&#34;type&#34;</span>: <span style="color:#0ff;font-weight:bold">&#34;boolean&#34;</span>,
+      <span style="color:#0ff;font-weight:bold">&#34;label&#34;</span>: <span style="color:#0ff;font-weight:bold">&#34;rebuy&#34;</span>,
+      <span style="color:#0ff;font-weight:bold">&#34;name&#34;</span>: <span style="color:#0ff;font-weight:bold">&#34;rebuy&#34;</span>
+    },
+    {
+      <span style="color:#0ff;font-weight:bold">&#34;type&#34;</span>: <span style="color:#0ff;font-weight:bold">&#34;boolean&#34;</span>,
+      <span style="color:#0ff;font-weight:bold">&#34;label&#34;</span>: <span style="color:#0ff;font-weight:bold">&#34;MIC&#34;</span>,
+      <span style="color:#0ff;font-weight:bold">&#34;value&#34;</span>: false,
+      <span style="color:#0ff;font-weight:bold">&#34;name&#34;</span>: <span style="color:#0ff;font-weight:bold">&#34;fic_opt_in&#34;</span>
+    },
+    {
+      <span style="color:#0ff;font-weight:bold">&#34;type&#34;</span>: <span style="color:#0ff;font-weight:bold">&#34;boolean&#34;</span>,
+      <span style="color:#0ff;font-weight:bold">&#34;label&#34;</span>: <span style="color:#0ff;font-weight:bold">&#34;MPlus&#34;</span>,
+      <span style="color:#0ff;font-weight:bold">&#34;value&#34;</span>: false,
+      <span style="color:#0ff;font-weight:bold">&#34;name&#34;</span>: <span style="color:#0ff;font-weight:bold">&#34;mplus_opt_in&#34;</span>
+    },
+    {
+      <span style="color:#0ff;font-weight:bold">&#34;type&#34;</span>: <span style="color:#0ff;font-weight:bold">&#34;boolean&#34;</span>,
+      <span style="color:#0ff;font-weight:bold">&#34;label&#34;</span>: <span style="color:#0ff;font-weight:bold">&#34;Check here to top up your credits when you run out so that you are ready for any encounter.&#34;</span>,
+      <span style="color:#0ff;font-weight:bold">&#34;value&#34;</span>: <span style="color:#ff0;font-weight:bold">1</span>,
+      <span style="color:#0ff;font-weight:bold">&#34;name&#34;</span>: <span style="color:#0ff;font-weight:bold">&#34;autobill_opt_in&#34;</span>
+    },
+    {
+      <span style="color:#0ff;font-weight:bold">&#34;type&#34;</span>: <span style="color:#0ff;font-weight:bold">&#34;text&#34;</span>,
+      <span style="color:#0ff;font-weight:bold">&#34;label&#34;</span>: <span style="color:#0ff;font-weight:bold">&#34;Credit Card number&#34;</span>,
+      <span style="color:#0ff;font-weight:bold">&#34;name&#34;</span>: <span style="color:#0ff;font-weight:bold">&#34;cc_number&#34;</span>
+    },
+    {
+      <span style="color:#0ff;font-weight:bold">&#34;type&#34;</span>: <span style="color:#0ff;font-weight:bold">&#34;select&#34;</span>,
+      <span style="color:#0ff;font-weight:bold">&#34;label&#34;</span>: <span style="color:#0ff;font-weight:bold">&#34;Credit Card Expiration Date&#34;</span>,
+      <span style="color:#0ff;font-weight:bold">&#34;options&#34;</span>: [
+        {
+          <span style="color:#0ff;font-weight:bold">&#34;id&#34;</span>: <span style="color:#ff0;font-weight:bold">1</span>,
+          <span style="color:#0ff;font-weight:bold">&#34;name&#34;</span>: <span style="color:#0ff;font-weight:bold">&#34;01&#34;</span>
+        },
+        ...
+        {
+          <span style="color:#0ff;font-weight:bold">&#34;id&#34;</span>: <span style="color:#ff0;font-weight:bold">12</span>,
+          <span style="color:#0ff;font-weight:bold">&#34;name&#34;</span>: <span style="color:#0ff;font-weight:bold">&#34;12&#34;</span>
+        }
+      ],
+      <span style="color:#0ff;font-weight:bold">&#34;name&#34;</span>: <span style="color:#0ff;font-weight:bold">&#34;cc_month&#34;</span>
+    },
+    {
+      <span style="color:#0ff;font-weight:bold">&#34;type&#34;</span>: <span style="color:#0ff;font-weight:bold">&#34;select&#34;</span>,
+      <span style="color:#0ff;font-weight:bold">&#34;label&#34;</span>: <span style="color:#0ff;font-weight:bold">&#34;Credit Card Expiration Date&#34;</span>,
+      <span style="color:#0ff;font-weight:bold">&#34;options&#34;</span>: [
+        {
+          <span style="color:#0ff;font-weight:bold">&#34;id&#34;</span>: <span style="color:#ff0;font-weight:bold">2019</span>,
+          <span style="color:#0ff;font-weight:bold">&#34;name&#34;</span>: <span style="color:#0ff;font-weight:bold">&#34;2019&#34;</span>
+        },
+        ...
+        {
+          <span style="color:#0ff;font-weight:bold">&#34;id&#34;</span>: <span style="color:#ff0;font-weight:bold">2068</span>,
+          <span style="color:#0ff;font-weight:bold">&#34;name&#34;</span>: <span style="color:#0ff;font-weight:bold">&#34;2068&#34;</span>
+        }
+      ],
+      <span style="color:#0ff;font-weight:bold">&#34;name&#34;</span>: <span style="color:#0ff;font-weight:bold">&#34;cc_year&#34;</span>
+    },
+    {
+      <span style="color:#0ff;font-weight:bold">&#34;type&#34;</span>: <span style="color:#0ff;font-weight:bold">&#34;text&#34;</span>,
+      <span style="color:#0ff;font-weight:bold">&#34;label&#34;</span>: <span style="color:#0ff;font-weight:bold">&#34;Card Verification Code (CVV) #&#34;</span>,
+      <span style="color:#0ff;font-weight:bold">&#34;name&#34;</span>: <span style="color:#0ff;font-weight:bold">&#34;cc_cvv&#34;</span>
+    }
+  ]
+}
+</code></pre></div><h3 id="post-payment-fields-tokens"><strong>POST /payment-fields-tokens</strong></h3>
+<p>This method enables to create a Hosted Payment Fields token (<code>pfToken</code>) when using Hosted Payment Fields. It is a server-to-server request from SampleClient to BlueSnap when the customer access the <strong>checkout form</strong>. The token serves to protect sensitive shopper information during a transaction. The transactions using a <code>pfToken</code> are:</p>
+<ul>
+<li>Processing a purchase.</li>
+<li>Creating a vaulted shopper.</li>
+<li>Updating a vaulted shopper with a new credit card.</li>
+</ul>
+<blockquote class="book-hint danger">
+  <strong>Important:</strong><br>
+The Hosted Payment Fields token expires after 60 minutes.
+</blockquote>
+
+<h4 id="url-1">URL</h4>
+<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">https://sandbox.bluesnap.com/services/<span style="color:#ff0;font-weight:bold">2</span>/payment-fields-tokens
+</code></pre></div><h4 id="header-parameters-1">Header Parameters</h4>
+<p>The following table lists the header parameters used in the request.</p>
+
+
+<table>
+  <tr>
+   <td><strong>Parameter</strong>
+   </td>
+   <td><strong>Description</strong>
+   </td>
+   <td><strong>Type</strong>
+   </td>
+   <td><strong>Required / Optional</strong>
+   </td>
+  </tr>
+  <tr>
+   <td><strong><code>Content-Type</code></strong>
+   </td>
+   <td>Specifies that the format of the response body is a JSON object.
+<p>
+<strong>Value:<code> application/json. </code></strong>
+   </td>
+   <td>string
+   </td>
+   <td>required
+   </td>
+  </tr>
+  <tr>
+   <td><strong><code>Accept</code></strong>
+   </td>
+   <td>Specifies that the format of the accepted request is a JSON object.
+<p>
+<strong>Value:<code> application/json.</code></strong>
+   </td>
+   <td>string
+   </td>
+   <td>required
+   </td>
+  </tr>
+  <tr>
+   <td><strong><code>Authorization</code></strong>
+   </td>
+   <td>Specifies the bearer token for BlueSnap API authentication. <strong>Value:</strong> Bearer [USER_TOKEN]
+   </td>
+   <td>string
+   </td>
+   <td>required
+   </td>
+  </tr>
+</table>
+
+
+
+<h4 id="sample-request-1">Sample Request</h4>
+<p>The following is an example of a command-line request.</p>
+<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">curl -I -X POST \
+  https://sandbox.bluesnap.com/services/<span style="color:#ff0;font-weight:bold">2</span>/payment-fields-tokens \
+  -H <span style="color:#0ff;font-weight:bold">&#39;Content-Type: application/json&#39;</span> \
+  -H <span style="color:#0ff;font-weight:bold">&#39;Accept: application/json&#39;</span> \
+  -H <span style="color:#0ff;font-weight:bold">&#39;Authorization: Bearer [USER_TOKEN]&#39;</span> \
+</code></pre></div><h4 id="sample-response-body-1">Sample Response Body</h4>
+<p>The following is an example of a typical response that shows all the elements of the Hosted Payment Field token generation.</p>
+<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">HTTP/<span style="color:#ff0;font-weight:bold">1.1</span> <span style="color:#ff0;font-weight:bold">201</span> <span style="color:#ff0;font-weight:bold">201</span>
+Date: Wed, <span style="color:#ff0;font-weight:bold">27</span> Nov <span style="color:#ff0;font-weight:bold">2019</span> <span style="color:#ff0;font-weight:bold">17</span>:<span style="color:#ff0;font-weight:bold">24</span>:<span style="color:#ff0;font-weight:bold">47</span> GMT
+Set-Cookie: JSESSIONID=XXXXXXXX; Path=/services; Secure; HttpOnly
+Location: https://sandbox.bluesnap.com/services/<span style="color:#ff0;font-weight:bold">2</span>/payment-fields-tokens/XXXXXXXX_
+Content-Length: <span style="color:#ff0;font-weight:bold">0</span>
+Strict-Transport-Security: <span style="color:#fff;font-weight:bold">max</span>-age=<span style="color:#ff0;font-weight:bold">31536000</span> ; includeSubDomains
+Set-Cookie: XXXXXXX; Path=/
+Set-Cookie: XXXXXXX; path=/services
+Via: <span style="color:#ff0;font-weight:bold">1.1</span> sjc1-bit32
+
+</code></pre></div><h4 id="hosted-payment-fields-token-errors">Hosted Payment Fields Token Errors</h4>
+<p>The following table lists the errors returned from a request related to the Hosted Payment Field token.</p>
+
+
+<table>
+  <tr>
+   <td><strong>Code</strong>
+   </td>
+   <td colspan="2" ><strong>Name</strong>
+   </td>
+   <td><strong>Description</strong>
+   </td>
+  </tr>
+  <tr>
+   <td><strong>14040</strong>
+   </td>
+   <td colspan="2" >EXPIRED_TOKEN
+   </td>
+   <td>Token is expired
+   </td>
+  </tr>
+  <tr>
+   <td><strong>14041</strong>
+   </td>
+   <td colspan="2" >TOKEN_NOT_FOUND
+   </td>
+   <td>Token is not found
+   </td>
+  </tr>
+  <tr>
+   <td><strong>14042</strong>
+   </td>
+   <td colspan="2" >NO_PAYMENT_DETAILS_LINKED_TO_TOKEN
+   </td>
+   <td>Token is no associated with a payment method
+   </td>
+  </tr>
+</table>
+
+
+
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+
+
+
+
+</div>
+
+ 
+        
+      </footer>
+
+      
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+    <aside class="book-toc">
+      
+  <nav id="TableOfContents">
+  <ul>
+    <li><a href="#purpose">Purpose</a></li>
+    <li><a href="#audience">Audience</a></li>
+    <li><a href="#overview">Overview</a></li>
+    <li><a href="#a-new-vaulted-shopper-making-a-purchase">A New Vaulted Shopper Making a Purchase</a></li>
+    <li><a href="#sequence-diagram">Sequence Diagram</a></li>
+    <li><a href="#endpoints">Endpoints</a>
+      <ul>
+        <li><a href="#get-v2billingcreditcard"><strong>GET /v2/billing/creditcard</strong></a></li>
+        <li><a href="#post-payment-fields-tokens"><strong>POST /payment-fields-tokens</strong></a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+ 
+    </aside>
+    
+  </main>
+
+  
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

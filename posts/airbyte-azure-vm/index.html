@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en" dir=>
+
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Disclaimer:
+I created this document based on an open source contribution to Airbyte. Please refer to the source document at Deploy on Azure   This page guides you through deploying Airbyte Open Source on a Microsoft Azure VM by setting up the deployment environment, installing and starting Airbyte, and connecting it to the VM.
+Note:
+The instructions have been tested on a standard DS1 v2 (1 vcpu, 3.5 GiB memory) Microsoft Azure VM with Ubuntu 18.">
+<meta name="theme-color" content="#FFFFFF"><meta property="og:title" content="Deploy Airbyte on a Microsoft Azure VM" />
+<meta property="og:description" content="Disclaimer:
+I created this document based on an open source contribution to Airbyte. Please refer to the source document at Deploy on Azure   This page guides you through deploying Airbyte Open Source on a Microsoft Azure VM by setting up the deployment environment, installing and starting Airbyte, and connecting it to the VM.
+Note:
+The instructions have been tested on a standard DS1 v2 (1 vcpu, 3.5 GiB memory) Microsoft Azure VM with Ubuntu 18." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://sblaizerwize.github.io/posts/airbyte-azure-vm/" />
+<meta property="article:published_time" content="2022-11-01T00:00:00+00:00" />
+<meta property="article:modified_time" content="2022-11-01T00:00:00+00:00" />
+<title>Deploy Airbyte on a Microsoft Azure VM | Salomon Marquez</title>
+<link rel="manifest" href="/manifest.json">
+<link rel="icon" href="/favicon.png" type="image/x-icon">
+<link rel="stylesheet" href="/book.min.8005b622238f1cff391feb991d3f8254c6e4e5acb4834c7c6dbf6e211d19551b.css" integrity="sha256-gAW2IiOPHP85H&#43;uZHT&#43;CVMbk5ay0g0x8bb9uIR0ZVRs=">
+<script defer src="/en.search.min.f63563102a6e4958f8531e5d06d632fdfa6371919667c73b700023e11ccc7e4c.js" integrity="sha256-9jVjECpuSVj4Ux5dBtYy/fpjcZGWZ8c7cAAj4RzMfkw="></script>
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-215534783-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+  
+</head>
+
+<body dir=>
+  <input type="checkbox" class="hidden" id="menu-control" />
+  <main class="container flex">
+    <aside class="book-menu">
+      
+  <nav>
+<h2 class="book-brand">
+  <a href="/"><img src="/logo.png" alt="Logo" /><span>Salomon Marquez</span>
+  </a>
+</h2>
+
+
+<div class="book-search">
+  <input type="text" id="book-search-input" placeholder="Search" aria-label="Search" maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+  <hr>
+<p><strong>DOCUMENTATION SAMPLES</strong></p>
+<ul>
+<li><a href="/posts/">Portfolio</a></li>
+</ul>
+<hr>
+<p><strong>ABOUT ME</strong></p>
+<ul>
+<li><a href="/#skills">Skills</a></li>
+<li><a href="/#projects">Projects</a></li>
+<li><a href="/#open-source">Open Source</a></li>
+<li><a href="/#presentations">Presentations</a></li>
+<li><a href="/#leadership-initiatives-at-wizeline">Leadership Initiatives</a></li>
+<li><a href="/#certifications">Certifications</a></li>
+<li><a href="/#education">Education</a>
+<!-- raw HTML omitted --></li>
+</ul>
+<hr>
+<p><strong>CONTACT</strong></p>
+<ul>
+<li><a href="mailto:phd.smarquez@gmail.com">phd.smarquez@gmail.com</a>
+<!-- raw HTML omitted --></li>
+</ul>
+<hr>
+<p><strong>LINKS</strong></p>
+<ul>
+<li><a href="/resume/CV_SALOMON_MARQUEZ.pdf">My CV</a></li>
+<li><a href="https://www.linkedin.com/in/sblaizer/">My LinkedIn</a></li>
+<li><a href="https://github.com/sblaizerwize?tab=repositories">My GitHub</a></li>
+<li><a href="https://scholar.google.com.mx/citations?hl=en&amp;user=A91CjSIAAAAJ&amp;view_op=list_works&amp;sortby=pubdate">My Scholar</a></li>
+</ul>
+<hr>
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var menu=document.querySelector("aside.book-menu nav");addEventListener("beforeunload",function(event){localStorage.setItem("menu.scrollTop",menu.scrollTop);});menu.scrollTop=localStorage.getItem("menu.scrollTop");})();</script>
+
+
+ 
+    </aside>
+
+    <div class="book-page">
+      <header class="book-header">
+        
+  <head>
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-215534783-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-215534783-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+</head>
+<div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <strong>Deploy Airbyte on a Microsoft Azure VM</strong>
+
+  <label for="toc-control">
+    
+    <img src="/svg/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+    <input type="checkbox" class="hidden" id="toc-control" />
+    <aside class="hidden clearfix">
+      
+  <nav id="TableOfContents">
+  <ul>
+    <li><a href="#set-up-the-environment">Set up the environment</a></li>
+    <li><a href="#install-and-start-airbyte">Install and start Airbyte</a></li>
+    <li><a href="#connect-to-airbyte">Connect to Airbyte</a></li>
+    <li><a href="#troubleshooting">Troubleshooting</a></li>
+  </ul>
+</nav>
+
+
+    </aside>
+  
+ 
+      </header>
+
+      
+      
+<article class="markdown">
+  <h1>
+    <a href="/posts/airbyte-azure-vm/">Deploy Airbyte on a Microsoft Azure VM</a>
+  </h1>
+  
+  <h5>Nov 1, 2022</h5>
+
+
+
+  
+  <div>
+    
+      <a href="/categories/article/">article</a>
+  </div>
+  
+
+  
+  <div>
+    
+      <a href="/tags/azure/">azure</a>, 
+      <a href="/tags/cloud/">cloud</a>, 
+      <a href="/tags/open-source/">open source</a>
+  </div>
+  
+
+
+  <p><blockquote class="book-hint danger">
+  <strong>Disclaimer:</strong><br>
+I created this document based on an open source contribution to Airbyte. Please refer to the source document at <a href="https://docs.airbyte.com/deploying-airbyte/on-azure-vm-cloud-shell">Deploy on Azure</a>
+</blockquote>
+
+<hr>
+<p>This page guides you through deploying Airbyte Open Source on a Microsoft Azure VM by setting up the deployment environment, installing and starting Airbyte, and connecting it to the VM.</p>
+<blockquote class="book-hint info">
+  <strong>Note:</strong><br>
+The instructions have been tested on a standard DS1 v2 (1 vcpu, 3.5 GiB memory) Microsoft Azure VM with Ubuntu 18.04.
+</blockquote>
+
+<h2 id="set-up-the-environment">Set up the environment</h2>
+<p>Install Docker and Docker Compose in the VM:</p>
+<ol>
+<li>
+<p><a href="https://learn.microsoft.com/en-us/azure/virtual-machines/">Create a new VM</a> and <a href="https://learn.microsoft.com/en-us/azure/virtual-machines/ssh-keys-portal">generate the SSH keys</a> to connect to the VM. You’ll need the SSH keys to connect to the VM remotely later.</p>
+</li>
+<li>
+<p>To connect to the VM, run the following command in the Azure Cloud Shell:</p>
+<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">ssh &lt;admin username&gt;<span style="color:#f00">@</span>&lt;IP address&gt;
+</code></pre></div><p>If successfully connected to the VM, the working directory of Cloud Shell should look like this: <code>&lt;admin username&gt;@&lt;virtual machine name&gt;:~$</code></p>
+</li>
+<li>
+<p>To install Docker, run the following commands:</p>
+<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">sudo apt-get update -y
+sudo apt-get install apt-transport-https ca-certificates curl gnupg lsb-release -y
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+echo <span style="color:#0ff;font-weight:bold">&#34;deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable&#34;</span> | sudo tee /etc/apt/sources.list.d/docker.list &gt; /dev/null
+sudo apt-get update
+sudo apt-get install docker-ce docker-ce-cli -y
+sudo usermod -a -G docker <span style="color:#f00">$</span>USER
+</code></pre></div></li>
+<li>
+<p>To install Docker Compose, run the following command:</p>
+<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">sudo wget https://github.com/docker/compose/releases/download/<span style="color:#ff0;font-weight:bold">1.26</span>.<span style="color:#ff0;font-weight:bold">2</span>/docker-compose-<span style="color:#f00">$</span>(uname -s)-<span style="color:#f00">$</span>(uname -m) -O /usr/local/<span style="color:#fff;font-weight:bold">bin</span>/docker-compose
+sudo chmod +x /usr/local/<span style="color:#fff;font-weight:bold">bin</span>/docker-compose
+</code></pre></div></li>
+<li>
+<p>Check Docker Compose version:</p>
+<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">docker-compose --version
+</code></pre></div></li>
+<li>
+<p>Close the SSH connection to ensure that the group modification is considered:</p>
+<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">logout
+</code></pre></div></li>
+<li>
+<p>Reconnect to the VM:</p>
+<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">ssh &lt;admin username&gt;<span style="color:#f00">@</span>&lt;IP address&gt;
+</code></pre></div></li>
+</ol>
+<h2 id="install-and-start-airbyte">Install and start Airbyte</h2>
+<p>Download Airbyte and deploy it in the VM using Docker Compose:</p>
+<ol>
+<li>
+<p>Ensure that you are connected to the VM:</p>
+<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">ssh &lt;admin username&gt;<span style="color:#f00">@</span>&lt;IP address&gt;
+</code></pre></div></li>
+<li>
+<p>Create and use a new directory:</p>
+<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">mkdir airbyte
+cd airbyte
+</code></pre></div></li>
+<li>
+<p>Download Airbyte from GitHub:</p>
+<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">wget https://raw.githubusercontent.com/airbytehq/airbyte/master/{.env,docker-compose.yaml}
+</code></pre></div></li>
+<li>
+<p>Start Airbyte by running the following command:</p>
+<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">sudo docker-compose up -d
+</code></pre></div><p>This step takes about two minutes to complete. When done, you will see the cursor prompt.</p>
+</li>
+</ol>
+<h2 id="connect-to-airbyte">Connect to Airbyte</h2>
+<p>Test a remote connection to your VM locally and verify that Airbyte is up and running.</p>
+<ol>
+<li>
+<p>In your local machine, open a terminal.</p>
+</li>
+<li>
+<p>Go to the folder where you stored the SSH key.</p>
+</li>
+<li>
+<p>Create a SSH tunnel for <code>port 8000</code> by typing the following command:</p>
+<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">ssh -N -L <span style="color:#ff0;font-weight:bold">8000</span>:localhost:<span style="color:#ff0;font-weight:bold">8000</span> -i &lt;your SSH key <span style="color:#fff;font-weight:bold">file</span>&gt; &lt;admin username&gt;<span style="color:#f00">@</span>&lt;IP address&gt;
+</code></pre></div><p>As a result, nothing happens. The cursor prompt keeps blinking.</p>
+</li>
+<li>
+<p>Open a web browser and navigate to <code>http://localhost:8000</code>. You will see Airbyte’s landing page.</p>
+</li>
+</ol>
+<blockquote class="book-hint danger">
+  <strong>Important:</strong><br>
+For security reasons, it is strongly recommended not to expose Airbyte on Internet available ports. Future versions will add support for SSL and authentication.
+</blockquote>
+
+<h2 id="troubleshooting">Troubleshooting</h2>
+<p>If you encounter any issues, reach out to our community on <a href="https://slack.airbyte.com/">Slack</a>.</p>
+</p>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+
+
+
+
+</div>
+
+ 
+        
+      </footer>
+
+      
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+    <aside class="book-toc">
+      
+  <nav id="TableOfContents">
+  <ul>
+    <li><a href="#set-up-the-environment">Set up the environment</a></li>
+    <li><a href="#install-and-start-airbyte">Install and start Airbyte</a></li>
+    <li><a href="#connect-to-airbyte">Connect to Airbyte</a></li>
+    <li><a href="#troubleshooting">Troubleshooting</a></li>
+  </ul>
+</nav>
+
+ 
+    </aside>
+    
+  </main>
+
+  
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

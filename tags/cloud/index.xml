@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>cloud on Salomon Marquez</title>
+    <link>https://sblaizerwize.github.io/tags/cloud/</link>
+    <description>Recent content in cloud on Salomon Marquez</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 01 Nov 2022 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://sblaizerwize.github.io/tags/cloud/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Deploy Airbyte on a Microsoft Azure VM</title>
+      <link>https://sblaizerwize.github.io/posts/airbyte-azure-vm/</link>
+      <pubDate>Tue, 01 Nov 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://sblaizerwize.github.io/posts/airbyte-azure-vm/</guid>
+      <description>Disclaimer:
+I created this document based on an open source contribution to Airbyte. Please refer to the source document at Deploy on Azure   This page guides you through deploying Airbyte Open Source on a Microsoft Azure VM by setting up the deployment environment, installing and starting Airbyte, and connecting it to the VM.
+Note:
+The instructions have been tested on a standard DS1 v2 (1 vcpu, 3.5 GiB memory) Microsoft Azure VM with Ubuntu 18.</description>
+    </item>
+    
+  </channel>
+</rss>

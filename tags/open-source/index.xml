@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>open source on Salomon Marquez</title>
+    <link>https://sblaizerwize.github.io/tags/open-source/</link>
+    <description>Recent content in open source on Salomon Marquez</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 01 Nov 2022 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://sblaizerwize.github.io/tags/open-source/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Deploy Airbyte on a Microsoft Azure VM</title>
+      <link>https://sblaizerwize.github.io/posts/airbyte-azure-vm/</link>
+      <pubDate>Tue, 01 Nov 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://sblaizerwize.github.io/posts/airbyte-azure-vm/</guid>
+      <description>Disclaimer:
+I created this document based on an open source contribution to Airbyte. Please refer to the source document at Deploy on Azure   This page guides you through deploying Airbyte Open Source on a Microsoft Azure VM by setting up the deployment environment, installing and starting Airbyte, and connecting it to the VM.
+Note:
+The instructions have been tested on a standard DS1 v2 (1 vcpu, 3.5 GiB memory) Microsoft Azure VM with Ubuntu 18.</description>
+    </item>
+    
+    <item>
+      <title>Julia Documentation Project</title>
+      <link>https://sblaizerwize.github.io/posts/season-docs-julia/</link>
+      <pubDate>Thu, 13 May 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://sblaizerwize.github.io/posts/season-docs-julia/</guid>
+      <description>This is a sample document that illustrates how I audited, developed, and presented a proposal for the Julia Language project for the Google Season of Docs 2021 edition
+The Julia Language Proposal for Season of Docs 2021 I would like to express my interest in participating in the project named Create a Comprehensive Julia Contributing Guide that is taking part in the Google Season of Docs 2021. Currently, I am looking for opportunities to contribute and sum efforts to the open-source software (OSS) community.</description>
+    </item>
+    
+    <item>
+      <title>Sympy Documentation Project</title>
+      <link>https://sblaizerwize.github.io/posts/season-docs-sympy/</link>
+      <pubDate>Thu, 13 May 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://sblaizerwize.github.io/posts/season-docs-sympy/</guid>
+      <description>This is a sample document that illustrates how I audited, developed, and presented a proposal for the Sympy project for the Google Season of Docs 2021 edition
+SymPy Proposal for Season of Docs 2021 I want to express my interest in participating in the project named Documentation Organization - SymPy that is taking part in the Google Season of Docs 2021. Currently, I am looking for opportunities to contribute and sum up efforts to the open-source software (OSS) community.</description>
+    </item>
+    
+    <item>
+      <title>Intermine Documentation Project</title>
+      <link>https://sblaizerwize.github.io/posts/season-docs-intermine/</link>
+      <pubDate>Thu, 09 Jul 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://sblaizerwize.github.io/posts/season-docs-intermine/</guid>
+      <description>This is a sample document that illustrates how I audited, developed, and presented a proposal for the Intermine project for the Google Season of Docs 2020 edition
+Welcome to the InterMine Documentation Site InterMine is an open source data warehouse build specifically for the integration and analysis of complex biological data. In this site you can find documentation and tutorials to get you up to speed with our brand new platform BlueGenes.</description>
+    </item>
+    
+  </channel>
+</rss>

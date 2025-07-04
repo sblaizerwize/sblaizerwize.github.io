@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>data structures on Salomon Marquez</title>
+    <link>https://sblaizerwize.github.io/tags/data-structures/</link>
+    <description>Recent content in data structures on Salomon Marquez</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 17 May 2023 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://sblaizerwize.github.io/tags/data-structures/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Fundamentals of Dictionaries</title>
+      <link>https://sblaizerwize.github.io/posts/fundamentalsofdictionaries/</link>
+      <pubDate>Wed, 17 May 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://sblaizerwize.github.io/posts/fundamentalsofdictionaries/</guid>
+      <description>Are you interested in learning about a more efficient way to store and access information than using a traditional list? Consider using dictionaries. A dictionary, also known as an associative array, map, hash, or hash map, is a data structure that represents objects as key-value pairs, making it easy to access information by knowing a key.
+For instance, suppose you want to create an inventory of your video games, including information like name, genre, platforms, and ratings.</description>
+    </item>
+    
+  </channel>
+</rss>

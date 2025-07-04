@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="en" dir=>
+
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="A Python package is a collection of modules. A module is the easiest way to import and reuse existing Python code that’s developed by other programmers. In simple terms, a package is a module, but not all modules are packages. So, the question that raises is: what differentiates a package from a module? The response lies in a file named __init__.py, which indicates that the folder directory is a package. In this article, we’ll walk you through the main concepts and steps about how to create, install, publish, and test your own Python package locally and globally.">
+<meta name="theme-color" content="#FFFFFF"><meta property="og:title" content="How to Create Python Packages" />
+<meta property="og:description" content="A Python package is a collection of modules. A module is the easiest way to import and reuse existing Python code that’s developed by other programmers. In simple terms, a package is a module, but not all modules are packages. So, the question that raises is: what differentiates a package from a module? The response lies in a file named __init__.py, which indicates that the folder directory is a package. In this article, we’ll walk you through the main concepts and steps about how to create, install, publish, and test your own Python package locally and globally." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://sblaizerwize.github.io/posts/pythonpackages/" />
+<meta property="article:published_time" content="2021-12-14T00:00:00+00:00" />
+<meta property="article:modified_time" content="2021-12-14T00:00:00+00:00" />
+<title>How to Create Python Packages | Salomon Marquez</title>
+<link rel="manifest" href="/manifest.json">
+<link rel="icon" href="/favicon.png" type="image/x-icon">
+<link rel="stylesheet" href="/book.min.8005b622238f1cff391feb991d3f8254c6e4e5acb4834c7c6dbf6e211d19551b.css" integrity="sha256-gAW2IiOPHP85H&#43;uZHT&#43;CVMbk5ay0g0x8bb9uIR0ZVRs=">
+<script defer src="/en.search.min.f63563102a6e4958f8531e5d06d632fdfa6371919667c73b700023e11ccc7e4c.js" integrity="sha256-9jVjECpuSVj4Ux5dBtYy/fpjcZGWZ8c7cAAj4RzMfkw="></script>
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-215534783-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+  
+</head>
+
+<body dir=>
+  <input type="checkbox" class="hidden" id="menu-control" />
+  <main class="container flex">
+    <aside class="book-menu">
+      
+  <nav>
+<h2 class="book-brand">
+  <a href="/"><img src="/logo.png" alt="Logo" /><span>Salomon Marquez</span>
+  </a>
+</h2>
+
+
+<div class="book-search">
+  <input type="text" id="book-search-input" placeholder="Search" aria-label="Search" maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+  <hr>
+<p><strong>DOCUMENTATION SAMPLES</strong></p>
+<ul>
+<li><a href="/posts/">Portfolio</a></li>
+</ul>
+<hr>
+<p><strong>ABOUT ME</strong></p>
+<ul>
+<li><a href="/#skills">Skills</a></li>
+<li><a href="/#projects">Projects</a></li>
+<li><a href="/#open-source">Open Source</a></li>
+<li><a href="/#presentations">Presentations</a></li>
+<li><a href="/#leadership-initiatives-at-wizeline">Leadership Initiatives</a></li>
+<li><a href="/#certifications">Certifications</a></li>
+<li><a href="/#education">Education</a>
+<!-- raw HTML omitted --></li>
+</ul>
+<hr>
+<p><strong>CONTACT</strong></p>
+<ul>
+<li><a href="mailto:phd.smarquez@gmail.com">phd.smarquez@gmail.com</a>
+<!-- raw HTML omitted --></li>
+</ul>
+<hr>
+<p><strong>LINKS</strong></p>
+<ul>
+<li><a href="/resume/CV_SALOMON_MARQUEZ.pdf">My CV</a></li>
+<li><a href="https://www.linkedin.com/in/sblaizer/">My LinkedIn</a></li>
+<li><a href="https://github.com/sblaizerwize?tab=repositories">My GitHub</a></li>
+<li><a href="https://scholar.google.com.mx/citations?hl=en&amp;user=A91CjSIAAAAJ&amp;view_op=list_works&amp;sortby=pubdate">My Scholar</a></li>
+</ul>
+<hr>
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var menu=document.querySelector("aside.book-menu nav");addEventListener("beforeunload",function(event){localStorage.setItem("menu.scrollTop",menu.scrollTop);});menu.scrollTop=localStorage.getItem("menu.scrollTop");})();</script>
+
+
+ 
+    </aside>
+
+    <div class="book-page">
+      <header class="book-header">
+        
+  <head>
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-215534783-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-215534783-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+</head>
+<div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <strong>How to Create Python Packages</strong>
+
+  <label for="toc-control">
+    
+    <img src="/svg/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+    <input type="checkbox" class="hidden" id="toc-control" />
+    <aside class="hidden clearfix">
+      
+  <nav id="TableOfContents">
+  <ul>
+    <li><a href="#local-distribution-of-a-python-package"><strong>Local Distribution of a Python Package</strong></a>
+      <ul>
+        <li><a href="#prerequisites">Prerequisites</a></li>
+        <li><a href="#structuring-your-package-folder">Structuring Your Package Folder</a></li>
+        <li><a href="#installing-and-testing-your-package-in-a-virtual-environment">Installing and Testing Your Package in a Virtual Environment</a></li>
+        <li><a href="#installing-and-testing-your-package-as-part-of-your-python-environment">Installing and Testing Your Package as Part of Your Python Environment</a></li>
+      </ul>
+    </li>
+    <li><a href="#global-distribution-of-a-python-package"><strong>Global Distribution of a Python Package</strong></a>
+      <ul>
+        <li><a href="#prerequisites-1">Prerequisites</a></li>
+        <li><a href="#structuring-your-global-package-folder">Structuring Your Global Package Folder</a></li>
+        <li><a href="#publishing-your-package-to-the-test-pypi-repository">Publishing Your Package to the Test Pypi Repository</a></li>
+        <li><a href="#downloading-and-testing-your-package-from-test-pypi">Downloading and Testing Your Package From Test PyPi</a></li>
+        <li><a href="#publishing-your-package-to-the-pypi-repository">Publishing Your Package to the PyPi Repository</a></li>
+        <li><a href="#downloading-and-testing-your-package-from-pypi">Downloading and Testing Your Package From PyPi</a></li>
+      </ul>
+    </li>
+    <li><a href="#conclusion"><strong>Conclusion</strong></a></li>
+  </ul>
+</nav>
+
+
+    </aside>
+  
+ 
+      </header>
+
+      
+      
+<article class="markdown">
+  <h1>
+    <a href="/posts/pythonpackages/">How to Create Python Packages</a>
+  </h1>
+  
+  <h5>Dec 14, 2021</h5>
+
+
+
+  
+  <div>
+    
+      <a href="/categories/article/">article</a>
+  </div>
+  
+
+  
+  <div>
+    
+      <a href="/tags/python/">python</a>, 
+      <a href="/tags/packages/">packages</a>
+  </div>
+  
+
+
+  <p><p>A Python package is a collection of modules. A module is the easiest way to import and reuse existing Python code that’s developed by other programmers. In simple terms, a package is a module, but not all modules are packages. So, the question that raises is: what differentiates a package from a module? The response lies in a file named <code>__init__.py</code>, which indicates that the folder directory is a package. In this article, we’ll walk you through the main concepts and steps about how to create, install, publish, and test your own Python package locally and globally.</p>
+<p>To start, we’ll define a function that calculates the square of a given number. The “squarenum.py” file contains the function script, as shown in the code snippet below:</p>
+<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#fff;font-weight:bold">def</span> calculate_square(num):
+    <span style="color:#0ff;font-weight:bold">&#34;&#34;&#34;
+</span><span style="color:#0ff;font-weight:bold">    Function that returns the square of a number
+</span><span style="color:#0ff;font-weight:bold">    
+</span><span style="color:#0ff;font-weight:bold">    Args: 
+</span><span style="color:#0ff;font-weight:bold">        num(float): a number
+</span><span style="color:#0ff;font-weight:bold">    
+</span><span style="color:#0ff;font-weight:bold">    Returns: 
+</span><span style="color:#0ff;font-weight:bold">        float: square of the number 
+</span><span style="color:#0ff;font-weight:bold">    &#34;&#34;&#34;</span>
+    
+    <span style="color:#fff;font-weight:bold">return</span> num**<span style="color:#ff0;font-weight:bold">2</span> 
+
+</code></pre></div><p>Our goal is to turn this function into a Python package. To do so, we first guide you step-by-step how to create your package locally. In doing so, you will learn how to structure your package’s directory, install it and test it. Finally, we’ll provide insights about how to publish your package into the Test PyPi and Pypi third-party software repositories for Python to make your package available worldwide.</p>
+<hr>
+<h2 id="local-distribution-of-a-python-package"><strong>Local Distribution of a Python Package</strong></h2>
+<p>Let’s first look at how you can structure, create, and install your Python package locally.</p>
+<h3 id="prerequisites">Prerequisites</h3>
+<p>Here’s what you’ll need to get started and creating your package distribution for local installation in macOS:</p>
+<ol>
+<li>First, ensure that you already have <a href="https://pip.pypa.io/en/stable/installation/">pip</a> installed. Pip is a package manager. To check if you have pip, run the following command in your terminal:</li>
+</ol>
+<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">pip -V
+</code></pre></div><ol start="2">
+<li>Next, create a virtual environment to safely install your package. Using a virtual environment will simplify the task of installing and removing your package without affecting your current Python configuration. Luckily, Python3 and later versions come with a pre-installed environment manager called <a href="https://packaging.python.org/guides/installing-using-pip-and-virtual-environments/">venv</a>. For this example, you’ll create a virtual environment named “myenvironment.” Go to your main project’s directory and run the following command:</li>
+</ol>
+<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">python3 -m venv myenvironment
+</code></pre></div><p>As a result, a new folder named “myenvironment” is created containing a brand new Python virtual environment.</p>
+<h3 id="structuring-your-package-folder">Structuring Your Package Folder</h3>
+<p>To create your local package, here’s the structure that your package will need to follow:</p>
+<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f00">└──</span> squarenum_distribution
+    <span style="color:#f00">├──</span> setup.py
+    <span style="color:#f00">└──</span> squarenum_package
+        <span style="color:#f00">├──</span> __init__.py
+        <span style="color:#f00">└──</span> squarenum.py
+</code></pre></div><p>This table provides a detailed description of each file:</p>
+
+
+<table>
+  <tr>
+   <td colspan="4" ><strong>File </strong>
+   </td>
+   <td><strong>Description</strong>
+   </td>
+  </tr>
+  <tr>
+   <td colspan="4" >squarenum_distribution
+   </td>
+   <td>Main project’s directory.
+   </td>
+  </tr>
+  <tr>
+   <td colspan="4" >setup.py
+   </td>
+   <td>Python file required for pip installing your package distribution. 
+   </td>
+  </tr>
+  <tr>
+   <td colspan="4" >squarenum_package
+   </td>
+   <td>Parent package’s directory. Note that the folder’s name will be the name of your package.
+   </td>
+  </tr>
+  <tr>
+   <td colspan="4" >__init__.py
+   </td>
+   <td>Python file executed when importing the package. It is required to import the directory as a package. Remember to leave this file empty.
+   </td>
+  </tr>
+  <tr>
+   <td colspan="4" >squarenum.py
+   </td>
+   <td>Python file that contains the logic of your package, in this case, your function. 
+   </td>
+  </tr>
+</table>
+
+
+
+<p>Let’s look at how we can scaffold your package’s folder.</p>
+<ol>
+<li>To start, go to your terminal and create the two main folders “squarenum_distribution” and “squarenum_package” using the “mkdir” command. Here’s how you can do it:</li>
+</ol>
+<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">mkdir squarenum_distribution
+</code></pre></div><ol start="2">
+<li>Next, you’ll need to create the rest of the files in their corresponding folders by simply running the “touch” command. Here’s an example you can follow:</li>
+</ol>
+<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">cd squarenum_distribution/squarenum_package
+touch setup.py 
+</code></pre></div><ol start="3">
+<li>Once you&rsquo;re done making all the files for your package’s directory, you’ll need to modify and include additional content for the “setup.py” and “squarenum.py” files. We recommend using the “nano” command in your terminal for this task. Alternatively, you can use your text editor of choice. With that said, ensure to include the following script for “setup.py”:</li>
+</ol>
+<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">nano setup.py 
+</code></pre></div><div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#fff;font-weight:bold">from</span> setuptools <span style="color:#fff;font-weight:bold">import</span> setup
+setup(name=<span style="color:#0ff;font-weight:bold">&#39;squarenum_package&#39;</span>,
+      version=<span style="color:#0ff;font-weight:bold">&#39;0.1&#39;</span>,
+      description=<span style="color:#0ff;font-weight:bold">&#39;Square of a number&#39;</span>,
+      packages=[<span style="color:#0ff;font-weight:bold">&#39;squarenum_package&#39;</span>],
+      zip_safe=False)
+</code></pre></div><p>Note that the “name” and “packages” parameters inside the setup() function correspond to the name of the “squarenum_package” folder that you created in step 1. In other words, these parameters are named likewise your package folder. Keep that in mind!.</p>
+<p>To learn more about the contents of the “setup.py” file, check out this <a href="https://packaging.python.org/tutorials/packaging-projects/#:~:text=setup-,.,-py%20%28dynamic%29">link</a>.</p>
+<ol start="4">
+<li>Next, you’ll need to repeat step 3 to include your function script in the “squarenum.py” file, as shown below:</li>
+</ol>
+<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">nano squarenum.py 
+</code></pre></div><div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#fff;font-weight:bold">def</span> calculate_square(num):
+	<span style="color:#0ff;font-weight:bold">&#34;&#34;&#34;
+</span><span style="color:#0ff;font-weight:bold">	Function that returns the square of a number
+</span><span style="color:#0ff;font-weight:bold">
+</span><span style="color:#0ff;font-weight:bold">	Args:
+</span><span style="color:#0ff;font-weight:bold">		num(float): a number
+</span><span style="color:#0ff;font-weight:bold">
+</span><span style="color:#0ff;font-weight:bold">	Returns:
+</span><span style="color:#0ff;font-weight:bold">		float: square of the number
+</span><span style="color:#0ff;font-weight:bold">
+</span><span style="color:#0ff;font-weight:bold">	&#34;&#34;&#34;</span>	
+	
+	<span style="color:#fff;font-weight:bold">return</span> num**<span style="color:#ff0;font-weight:bold">2</span>
+</code></pre></div><ol start="5">
+<li>Finally, go to your main package’s folder ./squarenum_distribution and type the “tree” command:</li>
+</ol>
+<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">cd squarenum_distribution
+tree 
+</code></pre></div><p>As a result, you’ll obtain the structure of your package that we were looking for.</p>
+<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f00">├──</span> setup.py
+<span style="color:#f00">└──</span> squarenum_package
+    <span style="color:#f00">├──</span> __init__.py
+    <span style="color:#f00">└──</span> squarenum.py
+</code></pre></div><h3 id="installing-and-testing-your-package-in-a-virtual-environment">Installing and Testing Your Package in a Virtual Environment</h3>
+<p>After structuring your package folder, you’ll need to install and test your package distribution locally using a virtual environment:</p>
+<ol>
+<li>In the console, go to the root folder that contains your “myenvironment” virtual environment. Ensure you are outside the “myenvironment” folder.</li>
+<li>Activate your virtual environment using the following command:</li>
+</ol>
+<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">source myenvironment/<span style="color:#fff;font-weight:bold">bin</span>/activate
+</code></pre></div><p>Note that your command line’s prompt has changed. It should now be preceded by the name of your virtual environment, as shown below:</p>
+<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">(myenvironment) [user]<span style="color:#f00">@</span>[hostname]:[current_directory]<span style="color:#f00">$</span>
+</code></pre></div><ol start="3">
+<li>With the virtual environment activated, go to the ./squarenum_distribution folder and run the following command:</li>
+</ol>
+<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">cd squarenum_distribution
+pip install .
+</code></pre></div><p>You will get the following output, which indicates that your package has successfully installed in your virtual environment:</p>
+<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">Processing ~/squarenum_distribution
+Installing collected packages: squarenum-package
+  Running setup.py install <span style="color:#fff;font-weight:bold">for</span> squarenum-package ... done
+Successfully installed squarenum-package-<span style="color:#ff0;font-weight:bold">0.1</span>
+</code></pre></div><ol start="4">
+<li>Now, let’s import our brand new Python package. In the console, open a Python interpreter:</li>
+</ol>
+<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">python
+</code></pre></div><ol start="5">
+<li>Import your package distribution by running the following command:</li>
+</ol>
+<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#fff;font-weight:bold">from</span> squarenum_package <span style="color:#fff;font-weight:bold">import</span> squarenum
+</code></pre></div><p>Here “squarenum” is the Python file that contains your function logic and “squarenum_package” is your package name.</p>
+<ol start="6">
+<li>Finally, test your function using the following command: \</li>
+</ol>
+<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">squarenum.calculate_square(<span style="color:#ff0;font-weight:bold">7</span>)
+<span style="color:#ff0;font-weight:bold">49</span>
+</code></pre></div><p>Note that we used the dot notation to call the “calculate_square()” function inside the “squarenum” file. The dot notation means that you’re referring to something inside a file.</p>
+<h3 id="installing-and-testing-your-package-as-part-of-your-python-environment">Installing and Testing Your Package as Part of Your Python Environment</h3>
+<p>To install and test your package distribution locally as part of your Python environment, just repeat the same steps from the <a href="#installing-and-testing-your-package-in-a-virtual-environment">previous section</a> but without using a virtual environment. Keep in mind that any changes you make to your system-level Python setup will be more difficult to undo.</p>
+<hr>
+<h2 id="global-distribution-of-a-python-package"><strong>Global Distribution of a Python Package</strong></h2>
+<p>Let’s take our local package distribution a step further. We’ll now make our package available in a repository so that other users can download and use it. In other words, we’ll make our package globally. We’ll be using the Python Package Index, abbreviated as <a href="https://pypi.org/">Pypi</a>, which is the official third-party software repository for the Python programming language.</p>
+<p>We’ll start by publishing our package into <a href="https://test.pypi.org/">Test Pypi </a>to check whether everything in our package is working fine. And then, as the cherry of the cake, we’ll publish it into PyPI to make it officially available to the Python community.</p>
+<h3 id="prerequisites-1">Prerequisites</h3>
+<p>The instructions for creating a global package somewhat differ from those for a local package, but are still quite straightforward. As a starting point, you’ll ensure to comply with the following:</p>
+<ol>
+<li>First, check whether you have already installed <a href="https://pip.pypa.io/en/stable/installation/">pip</a>, run the following command in your terminal:</li>
+</ol>
+<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">pip -V
+</code></pre></div><ol start="2">
+<li>Next, install <a href="https://pypi.org/project/twine/">twine</a>. This is a utility for publishing Python packages on PyPI. In your terminal, type:</li>
+</ol>
+<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">pip install twine
+</code></pre></div><ol start="3">
+<li>As the next step, create a virtual environment in your system to safely install your package. For this section of the article, we’ll create two virtual environments: one for the Test Pypi, and another for Pypi. To do so, go to your main project’s directory and run the following command:</li>
+</ol>
+<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">python3 -m venv mytestpypi_environment
+python3 -m venv mypypi_environment
+</code></pre></div><p>As a result, you’ll have two new folders named “mytestenvironment” and “mypypienvironment” containing a brand new Python virtual environment.</p>
+<ol start="4">
+<li>Finally, create a <a href="https://test.pypi.org/account/register/">Test Pypi</a> and a <a href="https://pypi.org/account/register/">Pypi</a> account.</li>
+</ol>
+<h3 id="structuring-your-global-package-folder">Structuring Your Global Package Folder</h3>
+<p>Here’s the structure that your package will need to follow:</p>
+<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f00">└──</span> squarenum_distribution_Pypi_test
+    <span style="color:#f00">├──</span> setup.py
+    <span style="color:#f00">└──</span> squarenum_package
+        <span style="color:#f00">├──</span> README.md
+        <span style="color:#f00">├──</span> __init__.py
+        <span style="color:#f00">├──</span> license.txt
+        <span style="color:#f00">├──</span> setup.cfg
+        <span style="color:#f00">└──</span> squarenum.py
+</code></pre></div><p>Note that the global package folder structure will slightly differ from that of a local package. You’ll notice three new files: “README.md,” “license.txt,” and “setup.cfg.” Since your package will be globally available, you’ll need a signature that tells the world: “Hey, this masterpiece was created by me!” Also, it is recommended to provide your end-users with instructions of how to install and run your package distribution. Here’s where the three new “amigos” come into play. The following table provides an overview of each file.</p>
+
+
+<table>
+  <tr>
+   <td><strong>File </strong>
+   </td>
+   <td><strong>Description</strong>
+   </td>
+  </tr>
+  <tr>
+   <td>squarenum_distribution_Pypi_test
+   </td>
+   <td>Main project’s directory.
+   </td>
+  </tr>
+  <tr>
+   <td>setup.py
+   </td>
+   <td>Python file required for pip installing your global package distribution. 
+   </td>
+  </tr>
+  <tr>
+   <td>squarenum_package
+   </td>
+   <td>Parent package’s directory. Note that the folder’s name will be the name of your package.
+   </td>
+  </tr>
+  <tr>
+   <td>README.md
+   </td>
+   <td>File that contains information and instructions of how to use your package.
+   </td>
+  </tr>
+  <tr>
+   <td>__init__.py
+   </td>
+   <td>Python file executed when importing the package. It is required to import the directory as a package. Remember to leave this file empty.
+   </td>
+  </tr>
+  <tr>
+   <td>license.txt
+   </td>
+   <td>Text file that contains information about your global package’s licensing. Most package creators follow the <a href="https://opensource.org/licenses/MIT">MIT license</a> template.    
+   </td>
+  </tr>
+  <tr>
+   <td>setup.cfg
+   </td>
+   <td>File containing your global package’s metadata.
+   </td>
+  </tr>
+  <tr>
+   <td>squarenum.py
+   </td>
+   <td>Python file that contains the logic of your package, in this case, your function. 
+   </td>
+  </tr>
+</table>
+
+
+
+<p>Let’s now look at how to structure your global package’s folder.</p>
+<ol>
+<li>As a cheatsheet, we can reuse the instructions provided in the <a href="#structuring-your-package-folder">Structuring your Package Folder</a> section, where the commands “mkdir” and “touch” were very handy.</li>
+<li>After creating all of the files for your global package’s directory, you’ll need to modify and include additional content for the “setup.py,” “setup.cfg,” and “squarenum.py” files. We again recommend using the “nano” command in your terminal for this task. Include the following script for the “setup.py:”</li>
+</ol>
+<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">nano setup.py 
+</code></pre></div><div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#fff;font-weight:bold">from</span> setuptools <span style="color:#fff;font-weight:bold">import</span> setup
+
+setup(name=<span style="color:#0ff;font-weight:bold">&#39;squarenum_package&#39;</span>,
+      version=<span style="color:#0ff;font-weight:bold">&#39;0.1&#39;</span>,
+      description=<span style="color:#0ff;font-weight:bold">&#39;Square of a number&#39;</span>,
+      author=<span style="color:#0ff;font-weight:bold">&#39;Salomon Marquez&#39;</span>,
+      author_email=<span style="color:#0ff;font-weight:bold">&#39;phd.smarquez@gmail.com&#39;</span>,
+      packages=[<span style="color:#0ff;font-weight:bold">&#39;squarenum_package&#39;</span>],
+      zip_safe=False)
+</code></pre></div><p>Note that we included two additional parameters inside the <em>setup()</em> function “author” and “author_email.” If you want to understand a bit more about the content of the “setup.py” file, you can consult this <a href="https://packaging.python.org/tutorials/packaging-projects/#:~:text=setup-,.,-py%20%28dynamic%29">link</a>.</p>
+<ol start="3">
+<li>Next, you’ll need to include the following script into the “setup.cfg” file:</li>
+</ol>
+<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">nano squarenum.py 
+</code></pre></div><div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">[metadata]
+description_file = README.md
+</code></pre></div><ol start="4">
+<li>Finally, include your function script in the “squarenum.py” file, as shown below: \</li>
+</ol>
+<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">nano squarenum.py 
+</code></pre></div><div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#fff;font-weight:bold">def</span> calculate_square(num):
+	<span style="color:#0ff;font-weight:bold">&#34;&#34;&#34;
+</span><span style="color:#0ff;font-weight:bold">	Function that returns the square of a number
+</span><span style="color:#0ff;font-weight:bold">
+</span><span style="color:#0ff;font-weight:bold">	Args:
+</span><span style="color:#0ff;font-weight:bold">		num(float): a number
+</span><span style="color:#0ff;font-weight:bold">
+</span><span style="color:#0ff;font-weight:bold">	Returns:
+</span><span style="color:#0ff;font-weight:bold">		float: square of the number
+</span><span style="color:#0ff;font-weight:bold">
+</span><span style="color:#0ff;font-weight:bold">	&#34;&#34;&#34;</span>	
+	
+	<span style="color:#fff;font-weight:bold">return</span> num**<span style="color:#ff0;font-weight:bold">2</span>
+ 
+</code></pre></div><h3 id="publishing-your-package-to-the-test-pypi-repository">Publishing Your Package to the Test Pypi Repository</h3>
+<p>With your global package folder structured, you can now publish your package to the Test Pypi repository. Here’s how to upload it.</p>
+<ol>
+<li>In your console, go to ./squarenum_distribution_PyPi_test and run the following command:</li>
+</ol>
+<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">cd squarenum_distribution_PyPi
+python setup.py sdist 
+</code></pre></div><ol start="2">
+<li>Then, upload your package distribution to Test PyPi by running:</li>
+</ol>
+<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">twine upload --repository-url https://test.pypi.org/legacy/ dist/*
+</code></pre></div><ol start="3">
+<li>When prompted, enter your Test Pypi account username and password. Recall that creating a Test PyPi account was a prerequisite. This is the right time to create one if you have not already done so.</li>
+</ol>
+<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">Uploading distributions to https://test.pypi.org/legacy/
+Enter your username:
+Enter your password:
+</code></pre></div><ol start="4">
+<li>In your browser, log in to your <a href="https://test.pypi.org/account/register/">Test PyPi </a>account.</li>
+<li>Finally, go to <strong>your projects</strong> section and check that your global package distribution has been uploaded.</li>
+</ol>
+<p><img src="
+
+https://sblaizerwize.github.io/blog/test_pypi.png" alt="TestPypi" />
+ </p>
+<blockquote class="book-hint danger">
+  <strong>Important:</strong><br>
+If your global package distribution name contains an underscore symbol, this is changed into hyphen when it is uploaded to the Test PyPi site.
+</blockquote>
+
+<h3 id="downloading-and-testing-your-package-from-test-pypi">Downloading and Testing Your Package From Test PyPi</h3>
+<p>It’s now time to run a few quality checks on your global package. To download and test your package from the Test PyPi repository, follow the next steps:</p>
+<ol>
+<li>
+<p>In the console, go to the root folder that contains your “mytestenvironment” virtual environment. Ensure you’re outside the “mytestenvironment” folder.</p>
+</li>
+<li>
+<p>Activate your virtual environment using the following command:</p>
+</li>
+</ol>
+<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">source mytestenvironment/<span style="color:#fff;font-weight:bold">bin</span>/activate
+</code></pre></div><p>Note that the prompt of your command line has changed. Now, It should be preceded by the name of your virtual environment as shown below:</p>
+<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">(mytestenvironment) [user]<span style="color:#f00">@</span>[hostname]:[current_directory]<span style="color:#f00">$</span>
+</code></pre></div><ol start="3">
+<li>With the virtual environment activated, install your package distribution using the following command and your package name:</li>
+</ol>
+<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">pip install --index-url https://test.pypi.org/simple/ squarenum-package
+</code></pre></div><p>You’ll get the following output:</p>
+<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">Collecting squarenum-package
+  Downloading https://test-files.pythonhosted.org/packages/c9/f0/<span style="color:#ff0;font-weight:bold">387</span>fd3f3edeb693d24bf191191d444ed87709463484d6cc7340896555515/squarenum_package-<span style="color:#ff0;font-weight:bold">0.1</span>.tar.gz
+Installing collected packages: squarenum-package
+  Running setup.py install <span style="color:#fff;font-weight:bold">for</span> squarenum-package ... done
+Successfully installed squarenum-package-<span style="color:#ff0;font-weight:bold">0.1</span>
+</code></pre></div><ol start="4">
+<li>Let’s now import our brand new Python package. In the console, open a Python interpreter:</li>
+</ol>
+<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">python
+</code></pre></div><ol start="5">
+<li>Import your global package distribution by running the following command:</li>
+</ol>
+<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#fff;font-weight:bold">from</span> squarenum_package <span style="color:#fff;font-weight:bold">import</span> squarenum
+</code></pre></div><p>“squarenum” is the Python file that contains your function logic and “squarenum_package” is your package name.</p>
+<ol start="6">
+<li>Finally, test your function using the following command:</li>
+</ol>
+<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">squarenum.calculate_square(<span style="color:#ff0;font-weight:bold">7</span>)
+<span style="color:#ff0;font-weight:bold">49</span>
+</code></pre></div><p>Note we used the dot notation to call the “calculate_square()” function inside the “squarenum” file. The dot notation means that you’re referring to something inside a file.</p>
+<h3 id="publishing-your-package-to-the-pypi-repository">Publishing Your Package to the PyPi Repository</h3>
+<p>If you’ve made it this far, then you have already created, published, downloaded, and tested your global package distribution. Our starting point was to check whether our package behaved as expected when completing the task of publishing it to the Test PyPi repository. If everything went OK, our final step will be to publish it to the PyPi repository. Let’s find out how our package gets ready for production.</p>
+<ol>
+<li>In your console, go to ./squarenum_distribution_PyPi_test and upload your package distribution to PyPi by running the following commands:</li>
+</ol>
+<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">cd /squarenum_distribution_PyPi_test 
+twine upload dist/*
+</code></pre></div><ol start="2">
+<li>When prompted, enter your PyPy account username and password. Recall that creating a PyPi account was a prerequisite. This is the right time to create one if you have not already done so.</li>
+</ol>
+<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">Uploading distributions to https://upload.pypi.org/legacy/
+Enter your username:
+Enter your password:
+</code></pre></div><ol start="3">
+<li>In your browser, log in to your <a href="https://pypi.org/account/register/">PyPi</a> account.</li>
+<li>Finally, go to <strong>your projects</strong> section and check that your global package distribution has been uploaded.</li>
+</ol>
+<p><img src="
+
+https://sblaizerwize.github.io/blog/pypi.png" alt="Pypi" />
+ </p>
+<blockquote class="book-hint danger">
+  <strong>Important:</strong><br>
+If your global package distribution name contains an underscore symbol, this is changed into hyphen when it is uploaded to the PyPi site.
+</blockquote>
+
+<p>If your global package distribution name contains an underscore symbol, this is changed into hyphen when it is uploaded to the Test PyPi site.</p>
+<h3 id="downloading-and-testing-your-package-from-pypi">Downloading and Testing Your Package From PyPi</h3>
+<p>This is the last step of our journey. To download and test your package from the PyPi repository, follow these steps:</p>
+<ol>
+<li>
+<p>In the console, go to the root folder that contains your “mypypi_environment” virtual environment. Ensure you are outside the “mypypi_environment” folder.</p>
+</li>
+<li>
+<p>Activate your virtual environment using the following command:</p>
+</li>
+</ol>
+<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">source mypypi_environment/<span style="color:#fff;font-weight:bold">bin</span>/activate
+</code></pre></div><p>Note that the prompt of your command line has changed. Now, It should be preceded by the name of your virtual environment as shown below:</p>
+<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">(mypypi_environment) [user]<span style="color:#f00">@</span>[hostname]:[current_directory]<span style="color:#f00">$</span>
+</code></pre></div><ol start="3">
+<li>With the virtual environment activated, install your global package distribution using the following command and your package name:</li>
+</ol>
+<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">pip install squarenum-package
+</code></pre></div><p>You’ll get the following output:</p>
+<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">Collecting squarenum-package
+  Downloading https://files.pythonhosted.org/packages/c9/f0/<span style="color:#ff0;font-weight:bold">387</span>fd3f3edeb693d24bf191191d444ed87709463484d6cc7340896555515/squarenum_package-<span style="color:#ff0;font-weight:bold">0.1</span>.tar.gz
+Installing collected packages: squarenum-package
+  Running setup.py install <span style="color:#fff;font-weight:bold">for</span> squarenum-package ... done
+Successfully installed squarenum-package-<span style="color:#ff0;font-weight:bold">0.1</span>
+</code></pre></div><ol start="4">
+<li>Now, let’s import our brand new Python package. In the console, open a Python interpreter:</li>
+</ol>
+<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">python
+</code></pre></div><ol start="5">
+<li>Import your global package distribution by running the following command:</li>
+</ol>
+<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#fff;font-weight:bold">from</span> squarenum_package <span style="color:#fff;font-weight:bold">import</span> squarenum
+</code></pre></div><p>“squarenum” is the Python file that contains your function logic and “squarenum_package” is your package name.</p>
+<ol start="6">
+<li>Finally, test your function using the following command:</li>
+</ol>
+<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">squarenum.calculate_square(<span style="color:#ff0;font-weight:bold">7</span>)
+<span style="color:#ff0;font-weight:bold">49</span>
+</code></pre></div><p>Note that we used the dot notation to call the “calculate_square()” function inside the “squarenum” file. The dot notation means that you’re referring to something inside a file.</p>
+<hr>
+<h2 id="conclusion"><strong>Conclusion</strong></h2>
+<p>Python packages allow developers to save time by reusing scripts, functions, and objects that others have developed. Let’s recap what we learned so far in this article.</p>
+<p>First, we took baby steps to figure out how to structure and create a package’s directory for local installation. This task was the foundation to take our package a step further and publish it to the Test PyPi repository. We realized that the structure of the parent folder for a local compared to a global package slightly changed. This is because we needed to include files that represented our signature for licensing and handling instructions on how to use our package. Finally, we published our package for global distribution in the PyPi repository.</p>
+<p>Here are a few takeaways about Python packages:</p>
+<ol>
+<li>Remember that once you’ve published a package, you are responsible for keeping it up-to-date and addressing any security issues.</li>
+<li>Python packages are versatile: you can pack not only functions but also objects, which is useful for OOP-based applications.</li>
+<li>You can learn more about Python packages by exploring existing packages. Have a look at the structure of packages like <a href="https://numpy.org/">Numpy</a> and <a href="https://pandas.pydata.org/pandas-docs/stable/getting_started/overview.html">Pandas</a>.</li>
+</ol>
+</p>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+
+
+
+
+</div>
+
+ 
+        
+      </footer>
+
+      
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+    <aside class="book-toc">
+      
+  <nav id="TableOfContents">
+  <ul>
+    <li><a href="#local-distribution-of-a-python-package"><strong>Local Distribution of a Python Package</strong></a>
+      <ul>
+        <li><a href="#prerequisites">Prerequisites</a></li>
+        <li><a href="#structuring-your-package-folder">Structuring Your Package Folder</a></li>
+        <li><a href="#installing-and-testing-your-package-in-a-virtual-environment">Installing and Testing Your Package in a Virtual Environment</a></li>
+        <li><a href="#installing-and-testing-your-package-as-part-of-your-python-environment">Installing and Testing Your Package as Part of Your Python Environment</a></li>
+      </ul>
+    </li>
+    <li><a href="#global-distribution-of-a-python-package"><strong>Global Distribution of a Python Package</strong></a>
+      <ul>
+        <li><a href="#prerequisites-1">Prerequisites</a></li>
+        <li><a href="#structuring-your-global-package-folder">Structuring Your Global Package Folder</a></li>
+        <li><a href="#publishing-your-package-to-the-test-pypi-repository">Publishing Your Package to the Test Pypi Repository</a></li>
+        <li><a href="#downloading-and-testing-your-package-from-test-pypi">Downloading and Testing Your Package From Test PyPi</a></li>
+        <li><a href="#publishing-your-package-to-the-pypi-repository">Publishing Your Package to the PyPi Repository</a></li>
+        <li><a href="#downloading-and-testing-your-package-from-pypi">Downloading and Testing Your Package From PyPi</a></li>
+      </ul>
+    </li>
+    <li><a href="#conclusion"><strong>Conclusion</strong></a></li>
+  </ul>
+</nav>
+
+ 
+    </aside>
+    
+  </main>
+
+  
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

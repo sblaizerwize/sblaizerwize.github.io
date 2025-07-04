@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en" dir=>
+
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="ChatGPT is a state-of-the-art language model developed by OpenAI. It serves many purposes in natural language processing, including language translation, chatbots, and story writing, among others.
+This guide describes how to utilize ChatGPT through the OpenAI API service on macOS operating systems. Additionally, it provides instructions for interacting with ChatGPT using Python.
+ Connect to ChatGPT via API To set up ChatGPT API follow these instructions:
+ Set up an API Key Sign up to OpenAI and follow the indications to create a new secret key.">
+<meta name="theme-color" content="#FFFFFF"><meta property="og:title" content="Your Simple Guide to use ChatGPT via the OpenAI API" />
+<meta property="og:description" content="ChatGPT is a state-of-the-art language model developed by OpenAI. It serves many purposes in natural language processing, including language translation, chatbots, and story writing, among others.
+This guide describes how to utilize ChatGPT through the OpenAI API service on macOS operating systems. Additionally, it provides instructions for interacting with ChatGPT using Python.
+ Connect to ChatGPT via API To set up ChatGPT API follow these instructions:
+ Set up an API Key Sign up to OpenAI and follow the indications to create a new secret key." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://sblaizerwize.github.io/posts/use-chatgpt-with-python/" />
+<meta property="article:published_time" content="2024-03-01T00:00:00+00:00" />
+<meta property="article:modified_time" content="2024-03-01T00:00:00+00:00" />
+<title>Your Simple Guide to use ChatGPT via the OpenAI API | Salomon Marquez</title>
+<link rel="manifest" href="/manifest.json">
+<link rel="icon" href="/favicon.png" type="image/x-icon">
+<link rel="stylesheet" href="/book.min.8005b622238f1cff391feb991d3f8254c6e4e5acb4834c7c6dbf6e211d19551b.css" integrity="sha256-gAW2IiOPHP85H&#43;uZHT&#43;CVMbk5ay0g0x8bb9uIR0ZVRs=">
+<script defer src="/en.search.min.f63563102a6e4958f8531e5d06d632fdfa6371919667c73b700023e11ccc7e4c.js" integrity="sha256-9jVjECpuSVj4Ux5dBtYy/fpjcZGWZ8c7cAAj4RzMfkw="></script>
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-215534783-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+  
+</head>
+
+<body dir=>
+  <input type="checkbox" class="hidden" id="menu-control" />
+  <main class="container flex">
+    <aside class="book-menu">
+      
+  <nav>
+<h2 class="book-brand">
+  <a href="/"><img src="/logo.png" alt="Logo" /><span>Salomon Marquez</span>
+  </a>
+</h2>
+
+
+<div class="book-search">
+  <input type="text" id="book-search-input" placeholder="Search" aria-label="Search" maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+  <hr>
+<p><strong>DOCUMENTATION SAMPLES</strong></p>
+<ul>
+<li><a href="/posts/">Portfolio</a></li>
+</ul>
+<hr>
+<p><strong>ABOUT ME</strong></p>
+<ul>
+<li><a href="/#skills">Skills</a></li>
+<li><a href="/#projects">Projects</a></li>
+<li><a href="/#open-source">Open Source</a></li>
+<li><a href="/#presentations">Presentations</a></li>
+<li><a href="/#leadership-initiatives-at-wizeline">Leadership Initiatives</a></li>
+<li><a href="/#certifications">Certifications</a></li>
+<li><a href="/#education">Education</a>
+<!-- raw HTML omitted --></li>
+</ul>
+<hr>
+<p><strong>CONTACT</strong></p>
+<ul>
+<li><a href="mailto:phd.smarquez@gmail.com">phd.smarquez@gmail.com</a>
+<!-- raw HTML omitted --></li>
+</ul>
+<hr>
+<p><strong>LINKS</strong></p>
+<ul>
+<li><a href="/resume/CV_SALOMON_MARQUEZ.pdf">My CV</a></li>
+<li><a href="https://www.linkedin.com/in/sblaizer/">My LinkedIn</a></li>
+<li><a href="https://github.com/sblaizerwize?tab=repositories">My GitHub</a></li>
+<li><a href="https://scholar.google.com.mx/citations?hl=en&amp;user=A91CjSIAAAAJ&amp;view_op=list_works&amp;sortby=pubdate">My Scholar</a></li>
+</ul>
+<hr>
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var menu=document.querySelector("aside.book-menu nav");addEventListener("beforeunload",function(event){localStorage.setItem("menu.scrollTop",menu.scrollTop);});menu.scrollTop=localStorage.getItem("menu.scrollTop");})();</script>
+
+
+ 
+    </aside>
+
+    <div class="book-page">
+      <header class="book-header">
+        
+  <head>
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-215534783-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-215534783-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+</head>
+<div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <strong>Your Simple Guide to use ChatGPT via the OpenAI API</strong>
+
+  <label for="toc-control">
+    
+    <img src="/svg/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+    <input type="checkbox" class="hidden" id="toc-control" />
+    <aside class="hidden clearfix">
+      
+  <nav id="TableOfContents">
+  <ul>
+    <li><a href="#connect-to-chatgpt-via-api">Connect to ChatGPT via API</a></li>
+    <li><a href="#use-chatgpt-with-python">Use ChatGPT with Python</a>
+      <ul>
+        <li><a href="#prerequisites">Prerequisites</a></li>
+        <li><a href="#set-up-chatgpt-with-python">Set up ChatGPT with Python</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+
+    </aside>
+  
+ 
+      </header>
+
+      
+      
+<article class="markdown">
+  <h1>
+    <a href="/posts/use-chatgpt-with-python/">Your Simple Guide to use ChatGPT via the OpenAI API</a>
+  </h1>
+  
+  <h5>Mar 1, 2024</h5>
+
+
+
+  
+  <div>
+    
+      <a href="/categories/article/">article</a>
+  </div>
+  
+
+  
+  <div>
+    
+      <a href="/tags/artificial-intelligence/">artificial intelligence</a>, 
+      <a href="/tags/chatgpt/">chatgpt</a>, 
+      <a href="/tags/python/">python</a>
+  </div>
+  
+
+
+  <p><p>ChatGPT is a state-of-the-art language model developed by <a href="https://openai.com/">OpenAI</a>. It serves many purposes in natural language processing, including language translation, chatbots, and story writing, among others.</p>
+<p>This guide describes how to utilize ChatGPT through the OpenAI API service on macOS operating systems. Additionally, it provides instructions for interacting with ChatGPT using Python.</p>
+<hr>
+<h2 id="connect-to-chatgpt-via-api">Connect to ChatGPT via API</h2>
+<p>To set up ChatGPT API follow these instructions:</p>
+<ol>
+<li>Set up an API Key
+Sign up to <a href="https://beta.openai.com/signup/">OpenAI</a> and follow the indications to <a href="https://beta.openai.com/signup/">create a new secret key</a>. All your API requests must include this API Key in the Authorization HTTP header of the request.</li>
+</ol>
+<blockquote class="book-hint danger">
+  <strong>Important:</strong><br>
+Keep in a safe location your new secret key. For security reasons, you won’t be able to retrieve it again; thus, you’ll need to generate a new one.
+</blockquote>
+
+<ol start="2">
+<li>
+<p>Open terminal</p>
+</li>
+<li>
+<p>Start making some requests using the OpenAI API client and your API Key. For further information, refer to <a href="https://platform.openai.com/docs/api-reference/making-requests">Making Requests</a>.</p>
+<p>To request all available models, use the following request:</p>
+<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">curl https://api.openai.com/v1/models \
+-H <span style="color:#0ff;font-weight:bold">&#34;Authorization: Bearer &lt;YOUR_API_KEY&gt;&#34;</span>
+</code></pre></div><p>To retrieve information about the <code>text-davinci-003</code> model, use the following request:</p>
+<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">curl https://api.openai.com/v1/models/text-davinci-<span style="color:#ff0;font-weight:bold">003</span> \
+-H <span style="color:#0ff;font-weight:bold">&#34;Authorization: Bearer &lt;YOUR_API_KEY&gt;&#34;</span>
+</code></pre></div><p>To make a completion, use the following request:</p>
+<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">curl https://api.openai.com/v1/completions \   
+-H <span style="color:#0ff;font-weight:bold">&#34;Content-Type: application/json&#34;</span> \   
+-H <span style="color:#0ff;font-weight:bold">&#34;Authorization: Bearer &lt;YOUR_API_KEY&gt;&#34;</span> \   
+-d <span style="color:#0ff;font-weight:bold">&#39;{</span>
+    <span style="color:#0ff;font-weight:bold">&#34;model&#34;</span>: <span style="color:#0ff;font-weight:bold">&#34;text-davinci-003&#34;</span>,
+   <span style="color:#0ff;font-weight:bold">&#34;prompt&#34;</span>: <span style="color:#0ff;font-weight:bold">&#34;Say this is a test&#34;</span>,
+   <span style="color:#0ff;font-weight:bold">&#34;max_tokens&#34;</span>: <span style="color:#ff0;font-weight:bold">7</span>,
+   <span style="color:#0ff;font-weight:bold">&#34;temperature&#34;</span>: <span style="color:#ff0;font-weight:bold">0</span>
+ }<span style="color:#0ff;font-weight:bold">&#39;</span>
+</code></pre></div></li>
+</ol>
+<hr>
+<h2 id="use-chatgpt-with-python">Use ChatGPT with Python</h2>
+<p>This section describes how to set up ChatGPT and use it in your Python scripts.</p>
+<h3 id="prerequisites">Prerequisites</h3>
+<p>Ensure you comply with the following requirements before you continue:</p>
+<ul>
+<li><a href="https://platform.openai.com/account/api-keys">Set up an API Key</a></li>
+<li>Install <a href="https://www.python.org/downloads/">Python</a> version 2.7 or later
+To check your current Python version, type the following command in the terminal <code>python3-version</code></li>
+</ul>
+<h3 id="set-up-chatgpt-with-python">Set up ChatGPT with Python</h3>
+<p>To integrate ChatGPT with your Python scripts:</p>
+<ol>
+<li>
+<p>Open terminal</p>
+</li>
+<li>
+<p>Create a new empty project folder:</p>
+<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">mkdir chatgpt-python
+cd chatgpt-python
+</code></pre></div></li>
+<li>
+<p>Install the OpenAI Python library:</p>
+<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">pip3 install openai
+</code></pre></div></li>
+<li>
+<p>Create a new file chat.pyin the project folder and edit its content:</p>
+<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">touch chat.py 
+nano chat.py
+</code></pre></div></li>
+<li>
+<p>Create a completion request sample using the following template:</p>
+<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#fff;font-weight:bold">import</span> openai
+
+<span style="color:#007f7f"># Set up OpenAI API client</span>
+openai.api_key = <span style="color:#0ff;font-weight:bold">&#34;&lt;YOUR_API_KEY&gt;&#34;</span>
+
+<span style="color:#007f7f"># Set up OpenAI model and prompt</span>
+model = <span style="color:#0ff;font-weight:bold">&#34;text-davinci-003&#34;</span>
+prompt = <span style="color:#0ff;font-weight:bold">&#34;Hello, how are you today?&#34;</span>
+
+<span style="color:#007f7f"># Generate a request</span>
+completion = openai.Completion.create(
+    engine=model,
+    prompt=prompt,
+    max_tokens=<span style="color:#ff0;font-weight:bold">1024</span>,
+    n=<span style="color:#ff0;font-weight:bold">1</span>,
+    stop=None,
+    temperature=<span style="color:#ff0;font-weight:bold">0</span>,
+)
+
+response = completion.choices[<span style="color:#ff0;font-weight:bold">0</span>].text
+<span style="color:#fff;font-weight:bold">print</span>(response)
+</code></pre></div></li>
+<li>
+<p>Save the chat.pyfile.</p>
+</li>
+<li>
+<p>Make the completion request by running the chat.pyscript.</p>
+<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">python3 chat.py
+</code></pre></div><p>You get the following sample response:</p>
+<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">I am doing well, thank you. How about you<span style="color:#f00">?</span>
+</code></pre></div><p>Refer to <a href="https://platform.openai.com/docs/api-reference/making-requests">Making Requests</a> for additional information.</p>
+</li>
+</ol>
+<hr>
+<p>Trusting this comes in handy for you!</p>
+</p>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+
+
+
+
+</div>
+
+ 
+        
+      </footer>
+
+      
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+    <aside class="book-toc">
+      
+  <nav id="TableOfContents">
+  <ul>
+    <li><a href="#connect-to-chatgpt-via-api">Connect to ChatGPT via API</a></li>
+    <li><a href="#use-chatgpt-with-python">Use ChatGPT with Python</a>
+      <ul>
+        <li><a href="#prerequisites">Prerequisites</a></li>
+        <li><a href="#set-up-chatgpt-with-python">Set up ChatGPT with Python</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+ 
+    </aside>
+    
+  </main>
+
+  
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

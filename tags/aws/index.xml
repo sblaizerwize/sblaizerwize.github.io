@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>aws on Salomon Marquez</title>
+    <link>https://sblaizerwize.github.io/tags/aws/</link>
+    <description>Recent content in aws on Salomon Marquez</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 23 Nov 2020 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://sblaizerwize.github.io/tags/aws/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Software Architecture Guide</title>
+      <link>https://sblaizerwize.github.io/posts/architecture-guide/</link>
+      <pubDate>Mon, 23 Nov 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://sblaizerwize.github.io/posts/architecture-guide/</guid>
+      <description>The purpose of this guide is to describe the software architecture of the Betelgeuse application and its interaction with third-party applications. This document is useful to the developers and stakeholders of Orion who are implementing or updating new features for the Betelgeuse application.
+ Introduction Betelgeuse is a serverless application hosted in the AWS cloud. Unlike the monolithic architecture of the previous Betelgeuse system, Betelgeuse is implemented as a containerized .</description>
+    </item>
+    
+    <item>
+      <title>Deploying Betelgeuse App using Octopus</title>
+      <link>https://sblaizerwize.github.io/posts/how-to-guide/</link>
+      <pubDate>Fri, 06 Nov 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://sblaizerwize.github.io/posts/how-to-guide/</guid>
+      <description>This guide explains you how to manually deploy to the AWS Cloud any of the following Betelgeuse projects using Octopus deploy:
+ Orion.Client Orion.Bellatrix Orion.Rigel Orion.Saiph  Note:
+These projects are automatically deployed to the development and testing environments. Both environments share the same projects and versions. For the laboratory environment, some of these packages are deployed manually.  The deployment process of Betelgeuse projects is detailed in the Architecture Guide.</description>
+    </item>
+    
+  </channel>
+</rss>

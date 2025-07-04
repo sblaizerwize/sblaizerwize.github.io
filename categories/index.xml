@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Categories on Salomon Marquez</title>
+    <link>https://sblaizerwize.github.io/categories/</link>
+    <description>Recent content in Categories on Salomon Marquez</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 01 Mar 2024 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://sblaizerwize.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>article</title>
+      <link>https://sblaizerwize.github.io/categories/article/</link>
+      <pubDate>Fri, 01 Mar 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://sblaizerwize.github.io/categories/article/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>proposal</title>
+      <link>https://sblaizerwize.github.io/categories/proposal/</link>
+      <pubDate>Thu, 13 May 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://sblaizerwize.github.io/categories/proposal/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>architecture guide</title>
+      <link>https://sblaizerwize.github.io/categories/architecture-guide/</link>
+      <pubDate>Mon, 23 Nov 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://sblaizerwize.github.io/categories/architecture-guide/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>tutorial</title>
+      <link>https://sblaizerwize.github.io/categories/tutorial/</link>
+      <pubDate>Fri, 06 Nov 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://sblaizerwize.github.io/categories/tutorial/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>api guide</title>
+      <link>https://sblaizerwize.github.io/categories/api-guide/</link>
+      <pubDate>Thu, 23 Jan 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://sblaizerwize.github.io/categories/api-guide/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>
